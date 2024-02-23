@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 
+import com.elvishew.xlog.XLog;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -106,6 +108,7 @@ public class UriFile {
       Map<String, Object> meta = new HashMap<>();
       Cursor cursor = resolver.query(uri, null, null, null, null);
       assert cursor != null;
+      cursor.moveToFirst();
       for (int i = 0; i < cursor.getColumnCount(); i++) {
         String k = cursor.getColumnName(i);
         Object v = null;
