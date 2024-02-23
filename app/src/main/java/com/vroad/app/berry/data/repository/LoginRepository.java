@@ -26,6 +26,10 @@ public class LoginRepository {
 
   private LoginRepository(LoginDataSource dataSource) {
     this.dataSource = dataSource;
+    Context context = Berry.getContext();
+    if (userProfile.exists()) {
+      user = FileUtils.readAs(userProfile);
+    }
   }
 
   public static LoginRepository getInstance() {
@@ -40,10 +44,6 @@ public class LoginRepository {
   }
 
   public boolean isLoggedIn() {
-    Context context = Berry.getContext();
-    if (!userProfile.exists())
-      return false;
-    user = FileUtils.readAs(userProfile);
     return user != null;
   }
 
@@ -55,11 +55,8 @@ public class LoginRepository {
     dataSource.logout();
   }
 
-  @SuppressWarnings("all")
   private void setLoggedInUser(LoggedInUser user) {
-    if (userProfile.exists())
-      userProfile.delete();
-    FileUtils.saveTo(user, userProfile);
+    user.saveAs(userProfile);
     this.user = user;
   }
 

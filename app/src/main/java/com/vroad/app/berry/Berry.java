@@ -3,6 +3,8 @@ package com.vroad.app.berry;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import androidx.activity.result.ActivityResultLauncher;
+
 import com.elvishew.xlog.XLog;
 import com.vroad.app.basic.BasicApplication;
 import com.vroad.app.berry.data.datasource.LoginDataSource;
@@ -26,5 +28,4 @@ public class Berry extends BasicApplication {
     super.onCreate();
     init();
   }
-
 }

@@ -5,12 +5,14 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Person implements Parcelable {
+public class Person implements Parcelable, Serializable {
   private String name;
   private int age;
 
@@ -19,7 +21,7 @@ public class Person implements Parcelable {
     age = in.readInt();
   }
 
-  public static final Creator<Person> CREATOR = new Creator<Person>() {
+  public static final Creator<Person> CREATOR = new Creator<>() {
     @Override
     public Person createFromParcel(Parcel in) {
       return new Person(in);
