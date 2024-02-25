@@ -40,10 +40,10 @@ android {
 }
 
 dependencies {
-  implementation("com.squareup.retrofit2:retrofit:2.5.0")
-  implementation("com.squareup.retrofit2:converter-gson:2.0.2")
-  implementation("com.elvishew:xlog:1.10.1")
-  compileOnly("org.projectlombok:lombok:1.18.30")
+  implementation("com.squareup.retrofit2:retrofit:2.9.0")
+  implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+  implementation("com.elvishew:xlog:1.11.0")
+  implementation("org.projectlombok:lombok:1.18.30")
   annotationProcessor("org.projectlombok:lombok:1.18.30")
   implementation("androidx.credentials:credentials:1.3.0-alpha01")
 

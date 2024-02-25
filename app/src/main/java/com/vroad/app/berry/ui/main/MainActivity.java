@@ -3,6 +3,7 @@ package com.vroad.app.berry.ui.main;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import com.elvishew.xlog.XLog;
 import com.vroad.app.basic.BasicActivity;
 import com.vroad.app.basic.io.UriFile;
+import com.vroad.app.basic.net.NetworkMonitor;
 import com.vroad.app.berry.databinding.ActivityMainBinding;
 
 import java.util.stream.Collectors;
@@ -39,6 +41,7 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
   public static String IMPORTANT_CHANNEL_ID = "main_important_notification";
   public static ActivityResultLauncher<String> createTextDocumentLauncher;
   public static ActivityResultLauncher<String[]> openTextDocumentLauncher;
+  public static ActivityResultLauncher<Uri> openDirectoryLauncher;
   private UriFile lastCreatedTextDocument = null;
 
   private void init() {
@@ -77,6 +80,12 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
           XLog.i(uris.stream().map(uri -> new UriFile(getContentResolver(), uri).getName()).collect(Collectors.toList()));
         }
     );
+    openDirectoryLauncher = registerForActivityResult(
+      new ActivityResultContracts.OpenDocumentTree(),
+      uri -> {
+        XLog.i("---- directory: %s", uri);
+      }
+    );
   }
 
   @Override
@@ -93,7 +102,10 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
 
   public void onClickStartService(View view) {
     try {
-      openTextDocumentLauncher.launch(new String[] {"*/*"});
+      //openDirectoryLauncher.launch(null);
+      //openTextDocumentLauncher.launch(new String[] {"*/*"});
+      //startActivity(new Intent(StorageManager.ACTION_MANAGE_STORAGE));
+      NetworkMonitor.start(this);
 
     } catch (Exception e) {
       XLog.i(e);
