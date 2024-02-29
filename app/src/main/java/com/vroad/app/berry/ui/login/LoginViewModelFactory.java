@@ -1,24 +1,24 @@
 package com.vroad.app.berry.ui.login;
 
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.annotation.NonNull;
+import android.content.Context;
 
-import com.vroad.app.berry.data.datasource.LoginDataSource;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+
+import com.vroad.app.basic.common.BasicViewModelFactory;
 import com.vroad.app.berry.data.repository.LoginRepository;
 
-/**
- * ViewModel provider factory to instantiate LoginViewModel.
- * Required given LoginViewModel has a non-empty constructor
- */
-public class LoginViewModelFactory implements ViewModelProvider.Factory {
+public class LoginViewModelFactory extends BasicViewModelFactory {
+  public LoginViewModelFactory(Context appContext) {
+    super(appContext);
+  }
 
   @NonNull
   @Override
   @SuppressWarnings("unchecked")
   public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
     if (modelClass.isAssignableFrom(LoginViewModel.class)) {
-      return (T) new LoginViewModel(LoginRepository.getInstance(new LoginDataSource()));
+      return (T) new LoginViewModel(LoginRepository.getInstance(appContext));
     } else {
       throw new IllegalArgumentException("Unknown ViewModel class");
     }

@@ -9,4 +9,15 @@
   <string name="invalid_username">Not a valid username</string>
   <string name="invalid_password">Password must be >5 characters</string>
   <string name="login_failed">"Login failed"</string>
+  <string name="title_activity_home">HomeActivity</string>
+  <string name="title_home">Home</string>
+  <string name="title_dashboard">Dashboard</string>
+  <string name="title_notifications">Notifications</string>
+  <string name="task_no">工单号</string>
+  <string name="task_id_label">工单号：</string>
+  <string name="task_content_label">内容：</string>
+  <string name="task_dispatcher_label">派工人：</string>
+  <string name="task_id_test">T_20231228_00001</string>
+  <string name="task_dispatcher_test">川建国</string>
+  <string name="task_content_test">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
 </resources>

@@ -18,4 +18,12 @@ public class User implements Serializable {
   private String email;
   private String description;
   List<Role> roles;
+
+  public User() {
+  }
+
+  public User(String name, String password) {
+    this.name = name;
+    this.password = password;
+  }
 }

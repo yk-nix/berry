@@ -4,9 +4,11 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Looper;
+import android.os.Message;
+import android.os.Messenger;
 import android.provider.Settings;
 import android.view.View;
 
@@ -14,10 +16,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.elvishew.xlog.XLog;
-import com.vroad.app.basic.BasicActivity;
+import com.vroad.app.basic.common.BasicActivity;
+import com.vroad.app.basic.common.BasicService;
 import com.vroad.app.basic.io.UriFile;
-import com.vroad.app.basic.net.NetworkMonitor;
+import com.vroad.app.basic.utils.AppUtils;
+import com.vroad.app.berry.data.repository.LoginRepository;
 import com.vroad.app.berry.databinding.ActivityMainBinding;
+import com.vroad.app.berry.service.TcpConnectionService;
+import com.vroad.app.berry.ui.home.HomeActivity;
 
 import java.util.stream.Collectors;
 
@@ -37,6 +43,7 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
    * which is packaged with this application.
    */
   public native String stringFromJNI();
+
   public static String NORMAL_CHANNEL_ID = "main_normal_notification";
   public static String IMPORTANT_CHANNEL_ID = "main_important_notification";
   public static ActivityResultLauncher<String> createTextDocumentLauncher;
@@ -44,7 +51,8 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
   public static ActivityResultLauncher<Uri> openDirectoryLauncher;
   private UriFile lastCreatedTextDocument = null;
 
-  private void init() {
+  @Override
+  protected void init() {
     // register notification channels
     NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     nm.createNotificationChannel(new NotificationChannel(NORMAL_CHANNEL_ID, "普通通知", NotificationManager.IMPORTANCE_LOW));
@@ -70,28 +78,16 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
   private void initActivityLaunchers() {
     createTextDocumentLauncher = registerForActivityResult(
         new ActivityResultContracts.CreateDocument("text/plain"),
-        uri -> {
-          lastCreatedTextDocument = new UriFile(getContentResolver(), uri);
-        }
+        uri -> lastCreatedTextDocument = new UriFile(getContentResolver(), uri)
     );
     openTextDocumentLauncher = registerForActivityResult(
         new ActivityResultContracts.OpenMultipleDocuments(),
-        uris -> {
-          XLog.i(uris.stream().map(uri -> new UriFile(getContentResolver(), uri).getName()).collect(Collectors.toList()));
-        }
+        uris -> XLog.i(uris.stream().map(uri -> new UriFile(getContentResolver(), uri).getName()).collect(Collectors.toList()))
     );
     openDirectoryLauncher = registerForActivityResult(
-      new ActivityResultContracts.OpenDocumentTree(),
-      uri -> {
-        XLog.i("---- directory: %s", uri);
-      }
+        new ActivityResultContracts.OpenDocumentTree(),
+        uri -> XLog.i("---- directory: %s", uri)
     );
-  }
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    init();
   }
 
   public final Handler handler = new Handler(Looper.getMainLooper(), msg -> {
@@ -102,17 +98,14 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
 
   public void onClickStartService(View view) {
     try {
-      //openDirectoryLauncher.launch(null);
-      //openTextDocumentLauncher.launch(new String[] {"*/*"});
-      //startActivity(new Intent(StorageManager.ACTION_MANAGE_STORAGE));
-      NetworkMonitor.start(this);
 
-    } catch (Exception e) {
-      XLog.i(e);
+      } catch(Exception e){
+        XLog.i(e);
+      }
+    }
+
+    public void onClickStopService (View view){
+      //AppUtils.exec(LoginRepository.getInstance(getApplicationContext())::logout, XLog::i);
+      stopService(new Intent(this, TcpConnectionService.class));
     }
   }
-
-  public void onClickStopService(View view) {
-    XLog.i("%s", lastCreatedTextDocument.getText());
-  }
-}

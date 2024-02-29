@@ -1,22 +1,19 @@
-package com.vroad.app.basic;
+package com.vroad.app.basic.common;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 import lombok.Getter;
 
 public abstract class BasicActivity<T extends ViewBinding>
-    extends AppCompatActivity implements LifecycleEventPrintable {
+    extends AppCompatActivity
+    implements LifecycleEventPrintable, ViewBindingAware, GenericParameterAware {
   @Getter(onMethod_ = {@Override})
   private final boolean printLifecycleEventEnabled;
   protected T binding;
@@ -31,30 +28,28 @@ public abstract class BasicActivity<T extends ViewBinding>
     printLifecycleEventEnabled = enablePrintLifecycleEvent;
   }
 
-  @SuppressWarnings("unchecked")
-  private Class<T> getBindingClassType() {
-    Type type = getClass().getGenericSuperclass();
-    assert type != null;
-    return (Class<T>) ((ParameterizedType) type).getActualTypeArguments()[0];
+  protected abstract void init();
+  protected void release() {}
+
+  protected void afterCreate() {
+    try {
+      binding = getViewBinding(this::getLayoutInflater);
+      setContentView(binding.getRoot());
+      init();
+    } catch (Exception ignored) {
+    }
   }
 
   @SuppressWarnings("unchecked")
-  private T getBinding() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Class<T> clz = getBindingClassType();
-    Method inflate = clz.getMethod("inflate", LayoutInflater.class);
-    return (T) inflate.invoke(null, getLayoutInflater());
+  public Class<T> getViewBindingClassType() {
+    return (Class<T>) getGenericParameterClassType(0);
   }
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     printLifecycleEvent(Lifecycle.Event.ON_CREATE);
     super.onCreate(savedInstanceState);
-    try {
-      binding = getBinding();
-      setContentView(binding.getRoot());
-    } catch (Exception ignored) {
-      /* */
-    }
+    afterCreate();
   }
 
   @Override
@@ -84,6 +79,7 @@ public abstract class BasicActivity<T extends ViewBinding>
   @Override
   protected void onDestroy() {
     printLifecycleEvent(Lifecycle.Event.ON_DESTROY);
+    release();
     super.onDestroy();
   }
 

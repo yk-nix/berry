@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+#/gradle/lib.verions.toml
+

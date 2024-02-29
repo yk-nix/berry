@@ -1,4 +1,4 @@
-package com.vroad.app.basic;
+package com.vroad.app.basic.common;
 
 import android.app.Application;
 

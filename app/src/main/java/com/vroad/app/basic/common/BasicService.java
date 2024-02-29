@@ -1,24 +1,27 @@
-package com.vroad.app.basic;
+package com.vroad.app.basic.common;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.IBinder;
+import android.os.Messenger;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Lifecycle;
 
 import lombok.Getter;
 
-public class BasicService
+public abstract class BasicService
     extends Service implements LifecycleEventPrintable {
   @Getter(onMethod_ = {@Override})
   private final boolean printLifecycleEventEnabled;
+  public static final String INTENT_TAG_MESSENGER = "messenger";
 
   protected BasicService() {
     super();
     printLifecycleEventEnabled = false;
   }
+
+  protected abstract IBinder getBinder(Intent intent);
 
   protected BasicService(boolean enablePrintLifecycleEvent) {
     super();
@@ -29,7 +32,7 @@ public class BasicService
   @Override
   public IBinder onBind(Intent intent) {
     printLifecycleEvent("ON_BIND");
-    return new BasicBinder();
+    return getBinder(intent);
   }
 
   @Override
@@ -60,13 +63,5 @@ public class BasicService
   public void onDestroy() {
     printLifecycleEvent(Lifecycle.Event.ON_DESTROY);
     super.onDestroy();
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-  public class BasicBinder extends Binder {
-    public BasicService getService() {
-      return BasicService.this;
-    }
   }
 }

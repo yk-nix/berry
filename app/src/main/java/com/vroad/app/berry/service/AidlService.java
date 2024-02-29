@@ -5,7 +5,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import com.vroad.app.basic.BasicService;
+import com.vroad.app.basic.common.BasicService;
 import com.vroad.app.berry.aidl.IPersonManager;
 import com.vroad.app.berry.data.pojo.Person;
 
@@ -15,6 +15,11 @@ import java.util.List;
 public class AidlService extends BasicService {
   public AidlService() {
     super(true);
+  }
+
+  @Override
+  protected IBinder getBinder(Intent intent) {
+    return binder;
   }
 
   private final List<Person> list = new ArrayList<>();
@@ -34,10 +39,4 @@ public class AidlService extends BasicService {
       list.add(person);
     }
   };
-
-  @Override
-  public IBinder onBind(Intent intent) {
-    super.onBind(intent);
-    return binder;
-  }
 }

@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.vroad.app.berry.R;
-import com.vroad.app.berry.data.repository.LoginRepository;
-import com.vroad.app.berry.data.Result;
 import com.vroad.app.berry.data.pojo.LoggedInUser;
+import com.vroad.app.berry.data.pojo.Result;
+import com.vroad.app.berry.data.repository.LoginRepository;
 
 import lombok.Getter;
 
@@ -27,10 +27,10 @@ public class LoginViewModel extends ViewModel {
     // can be launched in a separate
     new Thread(() -> {
       Result<LoggedInUser> result = loginRepository.login(username, password);
-      if (result == null)
-        loginResult.postValue(new LoginResult(R.string.login_failed));
+      if (result.OK())
+        loginResult.postValue(new LoginResult(true, null));
       else {
-        loginResult.postValue(new LoginResult(new LoggedInUserView("OK")));
+        loginResult.postValue(new LoginResult(false, result.getMessage()));
       }
     }).start();
   }
