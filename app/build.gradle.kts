@@ -49,6 +49,8 @@ dependencies {
   annotationProcessor("org.projectlombok:lombok:1.18.30")
   implementation("androidx.credentials:credentials:1.3.0-alpha01")
   implementation("com.auth0:java-jwt:3.4.0")
+  implementation("com.google.android.gms:play-services-location:21.1.0")
+  implementation("androidx.work:work-runtime:2.9.0")
 
   // smart-refresh  reference: https://gitee.com/scwang90/SmartRefreshLayout
   implementation("io.github.scwang90:refresh-layout-kernel:2.1.0")

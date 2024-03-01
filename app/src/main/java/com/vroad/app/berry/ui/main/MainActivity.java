@@ -5,10 +5,7 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
-import android.os.Message;
-import android.os.Messenger;
 import android.provider.Settings;
 import android.view.View;
 
@@ -17,13 +14,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.elvishew.xlog.XLog;
 import com.vroad.app.basic.common.BasicActivity;
-import com.vroad.app.basic.common.BasicService;
 import com.vroad.app.basic.io.UriFile;
-import com.vroad.app.basic.utils.AppUtils;
-import com.vroad.app.berry.data.repository.LoginRepository;
 import com.vroad.app.berry.databinding.ActivityMainBinding;
 import com.vroad.app.berry.service.TcpConnectionService;
-import com.vroad.app.berry.ui.home.HomeActivity;
 
 import java.util.stream.Collectors;
 
@@ -49,6 +42,8 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
   public static ActivityResultLauncher<String> createTextDocumentLauncher;
   public static ActivityResultLauncher<String[]> openTextDocumentLauncher;
   public static ActivityResultLauncher<Uri> openDirectoryLauncher;
+  public static ActivityResultLauncher<String[]> requestPermissionsLauncher;
+
   private UriFile lastCreatedTextDocument = null;
 
   @Override
@@ -88,6 +83,10 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
         new ActivityResultContracts.OpenDocumentTree(),
         uri -> XLog.i("---- directory: %s", uri)
     );
+    requestPermissionsLauncher = registerForActivityResult(
+        new ActivityResultContracts.RequestMultiplePermissions(),
+        ret -> XLog.i("--- permission request: %s", ret)
+    );
   }
 
   public final Handler handler = new Handler(Looper.getMainLooper(), msg -> {
@@ -98,14 +97,63 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
 
   public void onClickStartService(View view) {
     try {
+      XLog.i("-----------------------");
+      
+//      LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+//      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+//          ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//        requestPermissionsLauncher.launch(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
+//        return;
+//      }
+//      locationManager.getAllProviders().forEach(provider -> {
+//        XLog.i("--- %s(%s): %s",
+//            provider,
+//            locationManager.isProviderEnabled(provider) ? "ON" : "OFF",
+//            locationManager.getProviderProperties(provider));
+//      });
+//      String provider = LocationManager.FUSED_PROVIDER;
+//      XLog.i("--- location is %s, last-known: %s",
+//          locationManager.isLocationEnabled(), locationManager.getLastKnownLocation(provider));
+//      locationManager.getCurrentLocation(
+//          provider,
+//          null,
+//          getMainExecutor(),
+//          location -> XLog.i("------ %s %s", provider, location)
+//      );
 
-      } catch(Exception e){
-        XLog.i(e);
-      }
-    }
+//      FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
+//      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+//          ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//        requestPermissionsLauncher.launch(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
+//      }
+//      LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+//      if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+//      }
+//      LocationRequest locationRequest = new LocationRequest.Builder(PRIORITY_HIGH_ACCURACY, 5000).build();
+//      client.requestLocationUpdates(locationRequest, getMainExecutor(), location -> {
+//        XLog.i("-- %s", location);
+//      });
 
-    public void onClickStopService (View view){
-      //AppUtils.exec(LoginRepository.getInstance(getApplicationContext())::logout, XLog::i);
-      stopService(new Intent(this, TcpConnectionService.class));
+//      CurrentLocationRequest currentLocationRequest = new CurrentLocationRequest.Builder().setPriority(PRIORITY_HIGH_ACCURACY).build();
+//      client.getCurrentLocation(currentLocationRequest, null)
+//          .addOnSuccessListener(location -> XLog.i("--current location: %s", location));
+//      client.getLastLocation().addOnSuccessListener(location -> XLog.i("--last location: %s" , location));
+
+//      startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+//      locationManager.requestLocationUpdates(
+//          provider,
+//          0,
+//          0L,
+//          location -> XLog.i("-- %s location: %s", provider, location)
+//      );
+    } catch (Exception e) {
+      XLog.i(e);
     }
   }
+
+  public void onClickStopService(View view) {
+    //AppUtils.exec(LoginRepository.getInstance(getApplicationContext())::logout, XLog::i);
+    stopService(new Intent(this, TcpConnectionService.class));
+  }
+}
