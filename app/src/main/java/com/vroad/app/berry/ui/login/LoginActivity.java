@@ -12,7 +12,7 @@ import com.vroad.app.berry.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends BasicActivityWithViewModelFactory<ActivityLoginBinding, LoginViewModel, LoginViewModelFactory> {
   public LoginActivity() {
-    super(true);
+    super(false);
   }
 
   @Override

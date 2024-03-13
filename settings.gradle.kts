@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "berry"
 include(":app")
+include(":libui")

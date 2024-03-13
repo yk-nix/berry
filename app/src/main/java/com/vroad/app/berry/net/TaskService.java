@@ -1,10 +1,8 @@
 package com.vroad.app.berry.net;
 
 import com.vroad.app.berry.data.pojo.DynamicQueryParameter;
-import com.vroad.app.berry.data.pojo.Result;
 import com.vroad.app.berry.data.pojo.Task;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;

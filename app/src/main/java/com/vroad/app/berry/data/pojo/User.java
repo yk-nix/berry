@@ -1,14 +1,15 @@
 package com.vroad.app.berry.data.pojo;
 
+import com.vroad.app.basic.io.exSerializable;
 import com.vroad.app.berry.data.enums.EnableStatusEnum;
 
-import java.io.Serializable;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class User implements Serializable {
+public class User implements exSerializable {
+  public static String TAG = "USER";
   private String id;
   private String name;
   private String password;

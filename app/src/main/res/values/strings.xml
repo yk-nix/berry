@@ -6,18 +6,34 @@
   <string name="action_sign_in">Sign in or register</string>
   <string name="action_sign_in_short">Sign in</string>
   <string name="welcome">"Welcome !"</string>
-  <string name="invalid_username">Not a valid username</string>
-  <string name="invalid_password">Password must be >5 characters</string>
-  <string name="login_failed">"Login failed"</string>
+  <string name="invalid_username">用户名不能为空</string>
+  <string name="invalid_password">密码不能为空</string>
+  <string name="default_content_description">content description</string>
+
+
   <string name="title_activity_home">HomeActivity</string>
-  <string name="title_home">Home</string>
-  <string name="title_dashboard">Dashboard</string>
-  <string name="title_notifications">Notifications</string>
+  <string name="title_fragment_tasks">我的工单</string>
+  <string name="title_fragment_task_detail">工单详细信息</string>
+  <string name="title_fragment_dashboard">Dashboard</string>
+  <string name="title_fragment_settings">设置</string>
+
+
   <string name="task_no">工单号</string>
-  <string name="task_id_label">工单号：</string>
-  <string name="task_content_label">内容：</string>
-  <string name="task_dispatcher_label">派工人：</string>
+  <string name="task_id_label">工单号</string>
+  <string name="task_content_label">内容</string>
+  <string name="task_dispatcher_label">派工人</string>
   <string name="task_id_test">T_20231228_00001</string>
   <string name="task_dispatcher_test">川建国</string>
-  <string name="task_content_test">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
+  <string name="task_content_test">桃之夭夭，灼灼其华。之子于归，宜其室家。</string>
+  <string name="btn_text_logout">退出登录</string>
+  <string name="logout_note">登录退出后不会删除任何数据。</string>
+  <string name="button_logout_text">退出登录</string>
+  <string name="button_logout_cancel">取消</string>
+
+  <string name="login_hint_username">请输入用户名</string>
+  <string name="login_hint_password">请输入如密码</string>
+  <string name="login_button_text">登录</string>
+  <string name="login_failed">登录失败</string>
+
+
 </resources>

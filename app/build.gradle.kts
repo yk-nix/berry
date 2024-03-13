@@ -46,6 +46,7 @@ dependencies {
   implementation("org.projectlombok:lombok:1.18.30")
   implementation(libs.navigation.fragment)
   implementation(libs.navigation.ui)
+  implementation(libs.activity)
   annotationProcessor("org.projectlombok:lombok:1.18.30")
   implementation("androidx.credentials:credentials:1.3.0-alpha01")
   implementation("com.auth0:java-jwt:3.4.0")
@@ -61,6 +62,9 @@ dependencies {
   implementation("io.github.scwang90:refresh-header-two-level:2.0.6")
   implementation("io.github.scwang90:refresh-footer-ball:2.0.6")
   implementation("io.github.scwang90:refresh-footer-classics:2.0.6")
+
+  // libui-module
+  implementation(project(":libui"))
 
   implementation(libs.annotation)
   implementation(libs.lifecycle.livedata.ktx)

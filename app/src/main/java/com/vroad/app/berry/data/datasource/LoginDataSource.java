@@ -1,7 +1,7 @@
 package com.vroad.app.berry.data.datasource;
 
 import com.vroad.app.berry.data.pojo.LoggedInUser;
-import com.vroad.app.berry.data.pojo.Result;
+import com.vroad.app.berry.net.Result;
 import com.vroad.app.berry.data.pojo.User;
 import com.vroad.app.berry.net.UserService;
 

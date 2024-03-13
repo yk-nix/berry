@@ -2,10 +2,12 @@ package com.vroad.app.berry.data.repository;
 
 import android.content.Context;
 
+import androidx.annotation.Nullable;
+
 import com.vroad.app.basic.io.FileUtils;
 import com.vroad.app.berry.data.datasource.LoginDataSource;
 import com.vroad.app.berry.data.pojo.LoggedInUser;
-import com.vroad.app.berry.data.pojo.Result;
+import com.vroad.app.berry.net.Result;
 
 import java.io.File;
 
@@ -47,6 +49,7 @@ public class LoginRepository {
     this.user = user;
   }
 
+  @Nullable
   public Result<LoggedInUser> login(String username, String password) {
     Result<LoggedInUser> result = dataSource.login(username, password);
     if (result != null)
@@ -55,6 +58,7 @@ public class LoginRepository {
   }
 
   @SuppressWarnings("ResultOfMethodCallIgnored")
+  @Nullable
   public Result<String> logout() {
     Result<String> result = dataSource.logout();
     if (result != null && result.OK() && userProfile != null) {

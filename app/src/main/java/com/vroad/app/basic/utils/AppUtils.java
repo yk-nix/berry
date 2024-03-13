@@ -9,6 +9,27 @@ import java.util.function.Function;
 
 public class AppUtils {
 
+  public static void exec(Runnable action) {
+    (new Thread(() -> {
+      try {
+        action.run();
+      } catch (Exception e) {
+        XLog.e(e);
+      }
+    })).start();
+  }
+
+
+  public static <R> void exec(Callable<R> action) {
+    (new Thread(() -> {
+      try {
+        action.call();
+      } catch (Exception e) {
+        XLog.e(e);
+      }
+    })).start();
+  }
+
   public static <R> void exec(Callable<R> action, Consumer<R> after) {
     (new Thread(() -> {
       try {

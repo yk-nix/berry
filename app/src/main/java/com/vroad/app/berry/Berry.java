@@ -6,6 +6,7 @@ import android.content.Context;
 import com.elvishew.xlog.XLog;
 import com.vroad.app.basic.common.BasicApplication;
 import com.vroad.app.berry.net.RetrofitService;
+import com.vroad.app.berry.ui.common.ApplicationInfo;
 
 import lombok.Getter;
 
@@ -15,6 +16,7 @@ public class Berry extends BasicApplication {
   private void init() {
     XLog.init();
     RetrofitService.init(getApplicationContext(), serverBaseUrl);
+    ApplicationInfo.setContext(getApplicationContext());
   }
 
   @Override

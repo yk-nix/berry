@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 public class Task implements Serializable {
-  public static final String TAG = "task";
+  public static final String TAG = "TASK";
   private String id;
   private String note;
   @JsonAdapter(LogTimestampSecondAdapter.class)

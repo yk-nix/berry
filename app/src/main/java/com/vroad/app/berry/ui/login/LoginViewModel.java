@@ -7,8 +7,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.vroad.app.berry.R;
 import com.vroad.app.berry.data.pojo.LoggedInUser;
-import com.vroad.app.berry.data.pojo.Result;
+import com.vroad.app.berry.net.Result;
 import com.vroad.app.berry.data.repository.LoginRepository;
+import com.vroad.app.berry.ui.common.OperationResult;
 
 import lombok.Getter;
 
@@ -16,7 +17,7 @@ public class LoginViewModel extends ViewModel {
   @Getter
   private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
   @Getter
-  private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+  private MutableLiveData<OperationResult> loginResult = new MutableLiveData<>();
   private final LoginRepository loginRepository;
 
   LoginViewModel(LoginRepository loginRepository) {
@@ -27,10 +28,12 @@ public class LoginViewModel extends ViewModel {
     // can be launched in a separate
     new Thread(() -> {
       Result<LoggedInUser> result = loginRepository.login(username, password);
-      if (result.OK())
-        loginResult.postValue(new LoginResult(true, null));
+      if (result == null) {
+        loginResult.postValue(new OperationResult(false, R.string.login_failed));
+      } else if (result.OK())
+        loginResult.postValue(new OperationResult(true, null));
       else {
-        loginResult.postValue(new LoginResult(false, result.getMessage()));
+        loginResult.postValue(new OperationResult(false, result.getMessage()));
       }
     }).start();
   }
@@ -59,6 +62,6 @@ public class LoginViewModel extends ViewModel {
 
   // A placeholder password validation check
   private boolean isPasswordValid(String password) {
-    return password != null && password.trim().length() > 5;
+    return password != null && !password.trim().isEmpty();
   }
 }

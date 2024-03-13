@@ -11,16 +11,20 @@ import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.lifecycle.Observer;
+import androidx.work.WorkInfo;
 
 import com.elvishew.xlog.XLog;
-import com.vroad.app.basic.common.BasicActivity;
+import com.vroad.app.basic.common.BasicActivityWithViewModelFactory;
 import com.vroad.app.basic.io.UriFile;
 import com.vroad.app.berry.databinding.ActivityMainBinding;
 import com.vroad.app.berry.service.TcpConnectionService;
+import com.vroad.app.berry.ui.home.HomeActivity;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class MainActivity extends BasicActivity<ActivityMainBinding> {
+public class MainActivity extends BasicActivityWithViewModelFactory<ActivityMainBinding, MainViewModel, MainViewModelFactory> {
 
   // Used to load the 'berry' library on application startup.
   static {
@@ -28,7 +32,7 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
   }
 
   public MainActivity() {
-    super(false);
+    super(true);
   }
 
   /**
@@ -59,9 +63,22 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
     if (!nm.areNotificationsEnabled()) {
       initNotificationSettings();
     }
-
     // initialize activity launchers
     initActivityLaunchers();
+
+    // register observers
+    registerObservers();
+  }
+
+  public void registerObservers()  {
+    viewModel.getWorkInfo().observe(this, new Observer<List<WorkInfo>>() {
+      @Override
+      public void onChanged(List<WorkInfo> workInfos) {
+        if (workInfos == null || workInfos.isEmpty())
+          return;
+        XLog.i("--- work-info changed %s", workInfos.get(0).getState());
+      }
+    });
   }
 
   private void initNotificationSettings() {
@@ -97,8 +114,8 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
 
   public void onClickStartService(View view) {
     try {
-      XLog.i("-----------------------");
-      
+      startActivity(new Intent(this, HomeActivity.class));
+
 //      LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 //      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
 //          ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -148,7 +165,7 @@ public class MainActivity extends BasicActivity<ActivityMainBinding> {
 //          location -> XLog.i("-- %s location: %s", provider, location)
 //      );
     } catch (Exception e) {
-      XLog.i(e);
+      e.printStackTrace();
     }
   }
 

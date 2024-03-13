@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.ViewModelProvider;
 
-public class BasicViewModelFactory
+public abstract class BasicViewModelFactory
     implements ViewModelProvider.Factory, GenericParameterAware {
   protected final Context appContext;
 

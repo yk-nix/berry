@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/home_navigation"
+  app:startDestination="@+id/tasks_fragment">
+
+  <fragment
+    android:id="@+id/tasks_fragment"
+    android:name="com.vroad.app.berry.ui.tasks.TasksFragment"
+    android:label="@string/title_fragment_tasks"
+    tools:layout="@layout/fragment_tasks"/>
+
+  <fragment
+    android:id="@+id/dashboard_fragment"
+    android:name="com.vroad.app.berry.ui.dashboard.DashboardFragment"
+    android:label="@string/title_fragment_dashboard"
+    tools:layout="@layout/fragment_dashboard" />
+
+  <fragment
+    android:id="@+id/settings_fragment"
+    android:name="com.vroad.app.berry.ui.settings.SettingsFragment"
+    android:label="@string/title_fragment_settings"
+    tools:layout="@layout/fragment_settings" />
+</navigation>

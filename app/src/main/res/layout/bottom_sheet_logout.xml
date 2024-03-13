@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@drawable/shape_bottom_sheet_logout"
+  android:orientation="vertical">
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/settings_item_height"
+    android:textSize="@dimen/settings_item_text_size"
+    android:text="@string/logout_note"
+    android:background="@drawable/bg_settings_item"
+    android:gravity="center"/>
+
+  <include layout="@layout/divider_horizontal_line" />
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/settings_item_height"
+    android:clickable="true"
+    android:background="@drawable/bg_settings_item"
+    android:onClick="onClickLogoutConfirmed"
+    android:gravity="center"
+    android:text="@string/button_logout_text" />
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/settings_item_height"
+    android:longClickable="true"
+    android:layout_marginTop="10dp"
+    android:gravity="center"
+    android:onClick="onClickLogoutCancel"
+    android:background="@drawable/bg_settings_item"
+    android:text="@string/button_logout_cancel" />
+</LinearLayout>

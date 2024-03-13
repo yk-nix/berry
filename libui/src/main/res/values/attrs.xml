@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <declare-styleable name="SettingsItem">
+    <attr name="left_icon" format="integer" />
+    <attr name="left_icon_size" format="integer" />
+    <attr name="left_icon_margin_left" format="integer"/>
+    <attr name="left_icon_margin_right" format="integer"/>
+
+    <attr name="left_text" format="string" />
+    <attr name="left_text_size" format="float" />
+    <attr name="left_text_color" format="color" />
+
+    <attr name="right_text" format="string" />
+    <attr name="right_text_size" format="float" />
+    <attr name="right_text_color" format="color" />
+    <attr name="right_text_margin_right" format="integer"/>
+
+    <attr name="right_icon_type" format="enum">
+      <enum name="check_box" value="0" />
+      <enum name="switcher" value="1" />
+      <enum name="forward_arrow" value="2" />
+      <enum name="custom" value="3"/>
+    </attr>
+    <attr name="right_icon" format="reference" />
+    <attr name="right_icon_size" format="integer" />
+    <attr name="right_icon_margin_right" format="integer"/>
+
+    <attr name="underline" format="boolean" />
+    <attr name="underline_size" format="integer" />
+    <attr name="underline_color" format="color" />
+  </declare-styleable>
+</resources>

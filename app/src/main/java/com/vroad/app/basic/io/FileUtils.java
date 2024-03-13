@@ -1,5 +1,6 @@
 package com.vroad.app.basic.io;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -25,6 +26,14 @@ public class FileUtils {
   public static <T extends Serializable> T readAs(File file) {
     try {
       return readAs(new FileInputStream(file));
+    } catch (Exception e) {
+      return null;
+    }
+  }
+
+  public static <T extends Serializable> T readAs(byte[] data) {
+    try {
+      return readAs(new ByteArrayInputStream(data));
     } catch (Exception e) {
       return null;
     }

@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 
 import com.elvishew.xlog.XLog;
 import com.vroad.app.berry.data.pojo.LoggedInUser;
-import com.vroad.app.berry.data.pojo.Result;
 import com.vroad.app.berry.data.repository.LoginRepository;
 
 import java.io.IOException;

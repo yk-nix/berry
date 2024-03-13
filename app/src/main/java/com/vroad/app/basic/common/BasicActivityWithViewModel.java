@@ -1,9 +1,5 @@
 package com.vroad.app.basic.common;
 
-import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
