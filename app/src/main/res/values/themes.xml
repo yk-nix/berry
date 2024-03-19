@@ -64,4 +64,5 @@
 
   <!-- ********************************* divider line ********************************** -->
   <dimen name="corner_radius">5dp</dimen>
+  <dimen name="text_button_radius">0dp</dimen>
 </resources>

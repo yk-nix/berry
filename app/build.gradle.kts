@@ -5,6 +5,7 @@ plugins {
 android {
   namespace = "com.vroad.app.berry"
   compileSdk = 34
+  sourceSets["main"].jniLibs.srcDir("libs")
 
   defaultConfig {
     applicationId = "com.vroad.app.berry"
@@ -65,6 +66,10 @@ dependencies {
 
   // libui-module
   implementation(project(":libui"))
+
+  // baidu map
+  implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+  implementation(files("libs/BaiduLBS_Android.jar"))
 
   implementation(libs.annotation)
   implementation(libs.lifecycle.livedata.ktx)

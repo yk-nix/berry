@@ -2,6 +2,8 @@ package com.vroad.app.berry.ui.common;
 
 import androidx.annotation.Nullable;
 
+import com.vroad.app.basic.common.ApplicationInfo;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

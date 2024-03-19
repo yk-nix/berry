@@ -2,6 +2,7 @@ package com.vroad.app.basic.common;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.viewbinding.ViewBinding;
 
 public abstract class BasicActivityWithViewModel<T extends ViewBinding, V extends ViewModel>
@@ -20,8 +21,11 @@ public abstract class BasicActivityWithViewModel<T extends ViewBinding, V extend
   @SuppressWarnings("unchecked")
   protected void afterCreate() {
     try {
+      ViewModelStoreOwner viewModelStoreOwner = ApplicationInfo.getViewModelStoreOwner();
+      if (viewModelStoreOwner == null)
+        viewModelStoreOwner = this;
       binding = getViewBinding(this::getLayoutInflater);
-      viewModel = new ViewModelProvider(this).get((Class<V>) getGenericParameterClassType(1));
+      viewModel = new ViewModelProvider(viewModelStoreOwner).get((Class<V>) getGenericParameterClassType(1));
       setContentView(binding.getRoot());
       init();
     } catch (Exception ignored) {

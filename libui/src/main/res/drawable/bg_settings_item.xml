@@ -6,6 +6,12 @@
     <item android:state_selected="true">
         <color android:color="#F0F0F0"/>
     </item>
+    <item android:state_checked="true">
+        <color android:color="#F0F0F0"/>
+    </item>
+    <item android:state_hovered="true">
+        <color android:color="#F0F0F0"/>
+    </item>
     <item android:state_pressed="false">
         <color android:color="@color/white"/>
     </item>

@@ -101,7 +101,6 @@
       android:gravity="center"
       android:text="@string/btn_text_logout"
       android:textSize="@dimen/settings_item_text_size" />
-
   </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

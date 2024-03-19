@@ -7,13 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.viewbinding.ViewBinding;
-
-import lombok.Getter;
 
 public abstract class BasicFragmentWithViewModel<T extends ViewBinding, V extends ViewModel> extends BasicFragment<T> {
   protected V viewModel;
@@ -32,11 +29,15 @@ public abstract class BasicFragmentWithViewModel<T extends ViewBinding, V extend
                            @Nullable Bundle savedInstanceState) {
     printLifecycleEvent("ON_CREATE_VIEW");
     try {
+      ViewModelStoreOwner viewModelStoreOwner = ApplicationInfo.getViewModelStoreOwner();
+      if (viewModelStoreOwner == null)
+        viewModelStoreOwner = this;
       binding = getViewBinding(this::getLayoutInflater, container, false);
-      viewModel = new ViewModelProvider(this).get((Class<V>) getGenericParameterClassType(1));
+      viewModel = new ViewModelProvider(viewModelStoreOwner).get((Class<V>) getGenericParameterClassType(1));
       init();
       return binding.getRoot();
     } catch (Exception e) {
+      e.printStackTrace();
       return null;
     }
   }

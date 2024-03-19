@@ -1,8 +1,12 @@
 package com.vroad.app.berry.ui.tasks;
 
+import android.os.SystemClock;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.vroad.app.basic.date.DateTimeFormatters;
 import com.vroad.app.basic.utils.AppUtils;
 import com.vroad.app.berry.data.enums.ConditionType;
 import com.vroad.app.berry.data.enums.OperatorEnum;
@@ -12,23 +16,28 @@ import com.vroad.app.berry.data.pojo.Task;
 import com.vroad.app.berry.net.TaskService;
 import com.vroad.app.berry.ui.common.OperationResult;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.Setter;
+
 public class TasksViewModel extends ViewModel {
   @Getter
-  private final MutableLiveData<List<Task>> tasks;
-  private final TaskService taskService;
+  private final MutableLiveData<List<Task>> tasks = new MutableLiveData<>();
+  @Getter
+  private final MutableLiveData<OperationResult> freshResultState = new MutableLiveData<>();
+  @Getter
+  private final MutableLiveData<OperationResult> loadMoreResultState = new MutableLiveData<>();
+  private final TaskService taskService = new TaskService();
+  @Getter
+  @Setter
+  private LocalDateTime date = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
 
-  public TasksViewModel() {
-    tasks = new MutableLiveData<>();
-    taskService = new TaskService();
-  }
 
   @SuppressWarnings("unchecked")
-  public void loadTasks() {
-    if (tasks.isInitialized())
-      return;
+  public void loadTasks(@NonNull LocalDateTime date) {
     AppUtils.exec(
         taskService::list,
         new DynamicQueryParameter(new Condition[]{
@@ -36,13 +45,43 @@ public class TasksViewModel extends ViewModel {
                 "CREATE_TIME",
                 ConditionType.TIME_RANGE,
                 OperatorEnum.BETWEEN,
-                new String[]{"2023-02-28 00:00:00", "2024-02-28 23:59:59"}
-            )
+                new String[]{
+                    date.format(DateTimeFormatters.log_timestamp_sec),
+                    date.plusDays(1).format(DateTimeFormatters.log_timestamp_sec)
+                })
         }),
         result -> {
-          if (result.OK())
-            tasks.postValue(result.getData());
+          if (result != null && result.OK()) {
+            List<Task> taskList = result.getData();
+            if (taskList != null) {
+              tasks.postValue(taskList);
+            }
+          }
         }
     );
+  }
+
+  public void refreshTasks() {
+    AppUtils.exec(() -> {
+      SystemClock.sleep(2000);
+      List<Task> taskList = tasks.getValue();
+      if (taskList != null && !taskList.isEmpty()) {
+        taskList.add(0, tasks.getValue().get(0));
+      }
+      tasks.postValue(taskList);
+      freshResultState.postValue(new OperationResult(true));
+    });
+  }
+
+  public void loadMoreTasks() {
+    AppUtils.exec(() -> {
+      SystemClock.sleep(2000);
+      List<Task> taskList = tasks.getValue();
+      if (taskList != null && !taskList.isEmpty()) {
+        taskList.add(tasks.getValue().get(0));
+      }
+      tasks.postValue(taskList);
+      loadMoreResultState.postValue(new OperationResult(true));
+    });
   }
 }

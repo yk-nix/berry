@@ -3,6 +3,7 @@ package com.vroad.app.berry.net;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.elvishew.xlog.XLog;
 import com.vroad.app.berry.data.pojo.LoggedInUser;
@@ -33,6 +34,7 @@ public class RetrofitService<API> {
     return (Class<API>) ((ParameterizedType) type).getActualTypeArguments()[0];
   }
 
+  @Nullable
   public <T, R> Result<R> call(Function<T, Call<Result<R>>> func, T t) {
     try {
       return func.apply(t).execute().body();
@@ -42,6 +44,7 @@ public class RetrofitService<API> {
     }
   }
 
+  @Nullable
   public <R> Result<R> call(Callable<Call<Result<R>>> func) {
     try {
       return func.call().execute().body();

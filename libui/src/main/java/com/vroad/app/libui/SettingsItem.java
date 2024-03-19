@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.elvishew.xlog.XLog;
 import com.vroad.app.libui.utils.UtilsUI;
 
 

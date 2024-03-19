@@ -9,6 +9,7 @@
   <string name="invalid_username">用户名不能为空</string>
   <string name="invalid_password">密码不能为空</string>
   <string name="default_content_description">content description</string>
+  <string name="empty_content">""</string>
 
 
   <string name="title_activity_home">HomeActivity</string>
@@ -34,6 +35,12 @@
   <string name="login_hint_password">请输入如密码</string>
   <string name="login_button_text">登录</string>
   <string name="login_failed">登录失败</string>
+  <string name="no_data_message">没有数据!</string>
 
+  <string name="date_selector_today">今日</string>
+  <string name="date_selector_yesterday">昨日</string>
+  <string name="date_selector_calendar">日历</string>
+  <string name="date_format">%04d年%02d月%02d日</string>
+  <string name="date_selector_error">日期不能选择比今天更前的日期!</string>
 
 </resources>

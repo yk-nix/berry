@@ -1,24 +1,31 @@
 package com.vroad.app.berry.ui.dashboard;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 
+import com.elvishew.xlog.XLog;
 import com.vroad.app.basic.common.BasicFragmentWithViewModel;
-import com.vroad.app.berry.R;
+import com.vroad.app.berry.data.pojo.Device;
 import com.vroad.app.berry.databinding.FragmentDashboardBinding;
 import com.vroad.app.libui.utils.UtilsUI;
 
+import java.util.List;
+
 public class DashboardFragment extends BasicFragmentWithViewModel<FragmentDashboardBinding, DashboardViewModel> {
-  private Observer<String> textObserver;
+
   @Override
   protected void init() {
     UtilsUI.centerToolbarTitle(binding.toolbar);
-    textObserver = binding.textDashboard::setText;
-    viewModel.getText().observe(getViewLifecycleOwner(), textObserver);
+    viewModel.getDevices().observe(getViewLifecycleOwner(), deviceObserver);
+    viewModel.loadDevices();
   }
 
   @Override
   protected void release() {
-    viewModel.getText().removeObserver(textObserver);
+    super.release();
+    viewModel.getDevices().removeObserver(deviceObserver);
   }
+
+  private final Observer<List<Device>> deviceObserver = devices -> {
+    XLog.i("----devices: \n%s", devices);
+  };
 }

@@ -1,16 +1,25 @@
 package com.vroad.app.berry.ui.main;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.WindowDecorActionBar;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.work.WorkInfo;
 
@@ -20,6 +29,7 @@ import com.vroad.app.basic.io.UriFile;
 import com.vroad.app.berry.databinding.ActivityMainBinding;
 import com.vroad.app.berry.service.TcpConnectionService;
 import com.vroad.app.berry.ui.home.HomeActivity;
+import com.vroad.app.libui.utils.UtilsUI;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,9 +78,12 @@ public class MainActivity extends BasicActivityWithViewModelFactory<ActivityMain
 
     // register observers
     registerObservers();
+
+    binding.radioButton.setOnCheckedChangeListener(onCheckedChangeListener);
+    binding.radioButton2.setOnCheckedChangeListener(onCheckedChangeListener);
   }
 
-  public void registerObservers()  {
+  public void registerObservers() {
     viewModel.getWorkInfo().observe(this, new Observer<List<WorkInfo>>() {
       @Override
       public void onChanged(List<WorkInfo> workInfos) {
@@ -114,14 +127,14 @@ public class MainActivity extends BasicActivityWithViewModelFactory<ActivityMain
 
   public void onClickStartService(View view) {
     try {
-      startActivity(new Intent(this, HomeActivity.class));
 
 //      LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-//      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-//          ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//        requestPermissionsLauncher.launch(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
-//        return;
-//      }
+      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+          ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        requestPermissionsLauncher.launch(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
+        return;
+      }
+      startActivity(new Intent(this, HomeActivity.class));
 //      locationManager.getAllProviders().forEach(provider -> {
 //        XLog.i("--- %s(%s): %s",
 //            provider,
@@ -168,6 +181,17 @@ public class MainActivity extends BasicActivityWithViewModelFactory<ActivityMain
       e.printStackTrace();
     }
   }
+
+  private CompoundButton.OnCheckedChangeListener onCheckedChangeListener = (buttonView, isChecked) -> {
+    int paintFlags = buttonView.getPaintFlags();
+    if (isChecked) {
+      buttonView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG | Paint.FAKE_BOLD_TEXT_FLAG | paintFlags);
+    } else {
+      buttonView.setPaintFlags(~(Paint.UNDERLINE_TEXT_FLAG | Paint.FAKE_BOLD_TEXT_FLAG) & paintFlags);
+    }
+    XLog.i("---------%s %s", buttonView.getText(), isChecked);
+  };
+
 
   public void onClickStopService(View view) {
     //AppUtils.exec(LoginRepository.getInstance(getApplicationContext())::logout, XLog::i);

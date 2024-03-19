@@ -1,35 +1,23 @@
 package com.vroad.app.berry.ui.home;
 
-import static androidx.navigation.ui.NavigationUI.onNavDestinationSelected;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.elvishew.xlog.XLog;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.navigation.NavigationBarView;
 import com.vroad.app.basic.common.BasicActivityWithViewModelFactory;
-import com.vroad.app.basic.utils.ReflectionUtil;
 import com.vroad.app.berry.R;
 import com.vroad.app.berry.data.repository.LoginRepository;
 import com.vroad.app.berry.databinding.ActivityHomeBinding;
 import com.vroad.app.berry.ui.login.LoginActivity;
-import com.vroad.app.libui.utils.UtilsUI;
-
-import java.util.Objects;
-import java.util.Optional;
 
 import lombok.Getter;
 
@@ -42,28 +30,17 @@ public class HomeActivity extends BasicActivityWithViewModelFactory<ActivityHome
 
   @Override
   protected void init() {
-//    setSupportActionBar(binding.toolbar.getRoot());
     if (!LoginRepository.getInstance(getApplicationContext()).isLoggedIn())
       startActivity(new Intent(this, LoginActivity.class));
-//    appBarConfiguration = new AppBarConfiguration.Builder(
-//        R.id.tasks_fragment, R.id.dashboard_fragment, R.id.settings_fragment).build();
+    appBarConfiguration = new AppBarConfiguration.Builder().build();
     navController = ((NavHostFragment) binding.navHostFragmentActivityHome.getFragment()).getNavController();
-//    NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     NavigationUI.setupWithNavController(binding.navView, navController);
     resetNavigationViewItemSelectedListener();
-//    UtilsUI.centerToolbarTitle(binding.toolbar.getRoot());
     registerLogoutResultObserver();
   }
 
   private void resetNavigationViewItemSelectedListener() {
-    binding.navView.setOnItemSelectedListener(menuItem -> {
-//      if (menuItem.getItemId() == R.id.settings_fragment) {
-//        UtilsUI.setStatusBarColor(this, getResources().getColor(R.color.white, null));
-//      } else {
-//        UtilsUI.setStatusBarColor(this, getResources().getColor(R.color.gray_white, null));
-//      }
-      return NavigationUI.onNavDestinationSelected(menuItem, navController);
-    });
+    binding.navView.setOnItemSelectedListener(menuItem -> NavigationUI.onNavDestinationSelected(menuItem, navController));
   }
 
   private void registerLogoutResultObserver() {
@@ -113,5 +90,4 @@ public class HomeActivity extends BasicActivityWithViewModelFactory<ActivityHome
       bottomSheetDialog.cancel();
     }
   }
-
 }

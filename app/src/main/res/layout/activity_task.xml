@@ -7,16 +7,6 @@
   android:layout_height="match_parent"
   tools:context=".ui.task.TaskActivity">
 
-<!--  <androidx.appcompat.widget.Toolbar-->
-<!--    android:id="@+id/toolbar"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:background="@color/gray_white"-->
-<!--    android:minHeight="?attr/actionBarSize"-->
-<!--    app:layout_constraintEnd_toEndOf="parent"-->
-<!--    app:layout_constraintStart_toStartOf="parent"-->
-<!--    app:layout_constraintTop_toTopOf="parent" />-->
-
   <TextView
     android:id="@+id/test_text"
     android:layout_width="wrap_content"
