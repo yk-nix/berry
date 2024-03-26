@@ -68,7 +68,7 @@
       </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.vroad.app.libui.SettingsItem
+    <com.vroad.app.libui.ui.SettingsItem
       android:id="@+id/item_1"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -76,14 +76,14 @@
       app:left_text="jkdfjdlsfjksdjflsjf"
       app:right_icon_type="custom" />
 
-    <com.vroad.app.libui.SettingsItem
+    <com.vroad.app.libui.ui.SettingsItem
       android:id="@+id/item_2"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:left_text="collfjdksfjsj"
       app:right_icon_type="check_box" />
 
-    <com.vroad.app.libui.SettingsItem
+    <com.vroad.app.libui.ui.SettingsItem
       android:id="@+id/item_3"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

@@ -2,8 +2,6 @@ package com.vroad.app.berry.ui.common;
 
 import androidx.annotation.Nullable;
 
-import com.vroad.app.basic.common.ApplicationInfo;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -19,10 +17,5 @@ public class OperationResult {
 
   public OperationResult(boolean success) {
     this.success = success;
-  }
-
-  public OperationResult(boolean success, int messageResourceId) {
-    this.success = success;
-    this.message = ApplicationInfo.getContext().getResources().getString(messageResourceId);
   }
 }

@@ -12,6 +12,7 @@ import lombok.Data;
 
 @Data
 public class Device implements Serializable {
+  public static String TAG = "DEVICE";
   private String deviceId;
   private String epDeviceId;
   private String deviceName;

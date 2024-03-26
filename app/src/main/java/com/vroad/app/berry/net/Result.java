@@ -10,6 +10,13 @@ public class Result<T> {
   private String message;
   private T data;
 
+  public Result() {}
+
+  public Result(ResultStatusEnum status, String message) {
+    this.status = status;
+    this.message = message;
+  }
+
   public boolean OK() {
     return status == ResultStatusEnum.OK;
   }

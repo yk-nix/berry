@@ -1,22 +1,27 @@
 package com.vroad.app.berry.ui.login;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
-import com.vroad.app.basic.common.BasicActivityWithViewModelFactory;
+import androidx.annotation.Nullable;
+
+import com.vroad.app.libui.base.BasicActivity;
+import com.vroad.app.libui.base.BasicViewModelFactory;
 import com.vroad.app.berry.databinding.ActivityLoginBinding;
 
-public class LoginActivity extends BasicActivityWithViewModelFactory<ActivityLoginBinding, LoginViewModel, LoginViewModelFactory> {
+public class LoginActivity extends BasicActivity<ActivityLoginBinding, LoginViewModel> {
   public LoginActivity() {
-    super(false);
+    super(true, BasicViewModelFactory.class);
   }
 
   @Override
-  protected void init() {
+  public void init(@Nullable Bundle savedInstanceState) {
+    super.init(savedInstanceState);
     registerLoginFormStateObserver();
     registerLoginResultObserver();
     binding.username.addTextChangedListener(textWatcher);
@@ -29,10 +34,13 @@ public class LoginActivity extends BasicActivityWithViewModelFactory<ActivityLog
     });
   }
 
+  @Override
+  public void release() {
+  }
+
   private void registerLoginFormStateObserver() {
     viewModel.getLoginFormState().observe(this, loginFormState -> {
-      if (loginFormState == null)
-        return;
+      if (loginFormState == null) return;
       binding.login.setEnabled(loginFormState.isDataValid());
       if (loginFormState.getUsernameError() != null)
         binding.username.setError(getString(loginFormState.getUsernameError()));
@@ -43,8 +51,7 @@ public class LoginActivity extends BasicActivityWithViewModelFactory<ActivityLog
 
   private void registerLoginResultObserver() {
     viewModel.getLoginResult().observe(this, loginResult -> {
-      if (loginResult == null)
-        return;
+      if (loginResult == null) return;
       binding.loading.setVisibility(View.GONE);
       if (!loginResult.isSuccess()) {
         showLoginFailed(loginResult.getMessage());
@@ -66,19 +73,13 @@ public class LoginActivity extends BasicActivityWithViewModelFactory<ActivityLog
 
     @Override
     public void afterTextChanged(Editable s) {
-      viewModel.loginDataChanged(
-          binding.username.getText().toString(),
-          binding.password.getText().toString()
-      );
+      viewModel.loginDataChanged(binding.username.getText().toString(), binding.password.getText().toString());
     }
   };
 
   private void login() {
     binding.loading.setVisibility(View.VISIBLE);
-    viewModel.login(
-        binding.username.getText().toString(),
-        binding.password.getText().toString()
-    );
+    viewModel.login(binding.username.getText().toString(), binding.password.getText().toString());
   }
 
   public void onClickLoginButton(View view) {

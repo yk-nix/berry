@@ -1,21 +1,23 @@
 package com.vroad.app.berry.ui.home;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.vroad.app.basic.utils.AppUtils;
+import com.vroad.app.libui.base.AbstractApplication;
+import com.vroad.app.libui.base.BasicViewModel;
+import com.vroad.app.libui.utils.AppUtils;
 import com.vroad.app.berry.data.repository.LoginRepository;
 import com.vroad.app.berry.ui.common.OperationResult;
 
 import lombok.Getter;
 
-public class HomeViewModel extends ViewModel {
+public class HomeViewModel extends BasicViewModel {
   @Getter
   private final MutableLiveData<OperationResult> logoutResultState = new MutableLiveData<>();
   private final LoginRepository loginRepository;
 
-  public HomeViewModel(LoginRepository instance) {
-    loginRepository = instance;
+  public HomeViewModel(AbstractApplication abstractApplication) {
+    super(abstractApplication);
+    loginRepository = LoginRepository.getInstance(abstractApplication);
   }
 
   public void logout() {
@@ -25,5 +27,9 @@ public class HomeViewModel extends ViewModel {
       else
         logoutResultState.postValue(new OperationResult(false, result.getMessage()));
     });
+  }
+
+  public boolean isLoggedIn() {
+    return loginRepository.isLoggedIn();
   }
 }

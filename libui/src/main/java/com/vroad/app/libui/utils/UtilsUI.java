@@ -1,8 +1,9 @@
 package com.vroad.app.libui.utils;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
+import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -18,8 +19,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.WindowDecorActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.widget.ToolbarWidgetWrapper;
-
-import org.w3c.dom.Text;
 
 
 public class UtilsUI {
@@ -156,12 +155,12 @@ public class UtilsUI {
   private static Toolbar getToolbar(@Nullable ActionBar actionBar) {
     Toolbar ret = null;
     if (actionBar != null) {
-      Object obj = ReflectionUtil.getDeclaredField(WindowDecorActionBar.class, actionBar, "mDecorToolbar");
+      Object obj = ReflectionUtils.getDeclaredField(WindowDecorActionBar.class, actionBar, "mDecorToolbar");
       if (obj == null) {
-        obj = ReflectionUtil.getDeclaredField("androidx.appcompat.app.ToolbarActionBar", actionBar, "mDecorToolbar");
+        obj = ReflectionUtils.getDeclaredField("androidx.appcompat.app.ToolbarActionBar", actionBar, "mDecorToolbar");
       }
       if (obj != null) {
-        ret = (Toolbar) ReflectionUtil.getDeclaredField(ToolbarWidgetWrapper.class, obj, "mToolbar");
+        ret = (Toolbar) ReflectionUtils.getDeclaredField(ToolbarWidgetWrapper.class, obj, "mToolbar");
       }
     }
     return ret;
@@ -178,7 +177,7 @@ public class UtilsUI {
   public static TextView getToolbarTitle(@Nullable Toolbar toolbar) {
     if (toolbar == null)
       return null;
-    return ReflectionUtil.getDeclaredField(Toolbar.class, toolbar, "mTitleTextView");
+    return ReflectionUtils.getDeclaredField(Toolbar.class, toolbar, "mTitleTextView");
   }
 
   @UiThread
@@ -186,7 +185,7 @@ public class UtilsUI {
   public static ImageButton getToolbarNavigationButton(@Nullable Toolbar toolbar) {
     if (toolbar == null)
       return null;
-    return ReflectionUtil.getDeclaredField(Toolbar.class, toolbar, "mNavButtonView");
+    return ReflectionUtils.getDeclaredField(Toolbar.class, toolbar, "mNavButtonView");
   }
 
   @UiThread
@@ -200,7 +199,7 @@ public class UtilsUI {
   public static TextView getToolbarSubtitle(@Nullable Toolbar toolbar) {
     if (toolbar == null)
       return null;
-    return ReflectionUtil.getDeclaredField(Toolbar.class, "mSubtitleTextView");
+    return ReflectionUtils.getDeclaredField(Toolbar.class, "mSubtitleTextView");
   }
 
   @UiThread
@@ -214,7 +213,7 @@ public class UtilsUI {
   public static ImageView getToolbarLogo(@Nullable Toolbar toolbar) {
     if (toolbar == null)
       return null;
-    return ReflectionUtil.getDeclaredField(Toolbar.class, "mLogoView");
+    return ReflectionUtils.getDeclaredField(Toolbar.class, "mLogoView");
   }
 
   @UiThread
@@ -249,5 +248,26 @@ public class UtilsUI {
     if (activity != null) {
       activity.getWindow().setStatusBarColor(color);
     }
+  }
+
+  public static Drawable getRectangleShapeDrawable(ColorStateList solidColors,
+                                          ColorStateList strokeColors, int strokeWidth,
+                                          float dashWidth, float dashGap,
+                                          float radius) {
+    GradientDrawable gradientDrawable = new GradientDrawable();
+    gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+    gradientDrawable.setCornerRadius(radius);
+    gradientDrawable.setColor(solidColors.getDefaultColor());
+    gradientDrawable.setStroke(strokeWidth, strokeColors.getDefaultColor(), dashWidth, dashGap);
+    return gradientDrawable;
+  }
+
+  public static Drawable getRectangleShapeDrawable(@ColorInt int solidColor,
+                                          @ColorInt int strokeColor, int strokeWidth,
+                                          float dashWidth, float dashGap,
+                                          float radius) {
+    return getRectangleShapeDrawable(ColorStateList.valueOf(solidColor),
+        ColorStateList.valueOf(strokeColor), strokeWidth, dashWidth, dashGap,
+        radius);
   }
 }

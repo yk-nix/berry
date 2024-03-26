@@ -2,9 +2,10 @@ package com.vroad.app.berry.ui.settings;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class SettingsViewModel extends ViewModel {
+import com.vroad.app.libui.base.AbstractViewModel;
+
+public class SettingsViewModel extends AbstractViewModel {
 
   private final MutableLiveData<String> mText;
 

@@ -23,11 +23,24 @@ android {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
+  buildFeatures {
+    viewBinding = true
+    aidl = true
+    dataBinding = true
+  }
 }
 
 dependencies {
 
+  implementation("org.projectlombok:lombok:1.18.32")
+  annotationProcessor("org.projectlombok:lombok:1.18.32")
   implementation("com.elvishew:xlog:1.11.0")
+  implementation("com.auth0:java-jwt:4.4.0")
+
+  implementation(libs.activity)
+  implementation(libs.annotation)
+  implementation(libs.lifecycle.livedata.ktx)
+  implementation(libs.lifecycle.viewmodel.ktx)
   implementation(libs.appcompat)
   implementation(libs.material)
   testImplementation(libs.junit)

@@ -11,6 +11,7 @@
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
   <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
   <application
     android:name=".Berry"
@@ -48,7 +49,7 @@
       android:process=":remote"/>
     <meta-data
       android:name="com.baidu.lbsapi.API_KEY"
-      android:value="Bdwtida9qeKR2alSspZsVdD7tNFaIGOF"/>
+      android:value="nSxiPohfziUaCuONe4ViUP2N"/>
 
     <activity
       android:name=".ui.main.MainActivity"

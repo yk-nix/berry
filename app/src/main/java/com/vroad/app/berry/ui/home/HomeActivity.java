@@ -3,40 +3,52 @@ package com.vroad.app.berry.ui.home;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.vroad.app.basic.common.BasicActivityWithViewModelFactory;
+import com.vroad.app.libui.base.BasicActivity;
+import com.vroad.app.libui.base.BasicViewModelFactory;
 import com.vroad.app.berry.R;
-import com.vroad.app.berry.data.repository.LoginRepository;
 import com.vroad.app.berry.databinding.ActivityHomeBinding;
 import com.vroad.app.berry.ui.login.LoginActivity;
 
 import lombok.Getter;
 
-public class HomeActivity extends BasicActivityWithViewModelFactory<ActivityHomeBinding, HomeViewModel, HomeViewModelFactory> {
+public class HomeActivity extends BasicActivity<ActivityHomeBinding, HomeViewModel> {
   private AppBarConfiguration appBarConfiguration;
   private NavController navController;
   @Getter
   private ViewGroup.LayoutParams toolbarTitleLayoutParams;
   private BottomSheetDialog bottomSheetDialog;
 
+  public HomeActivity() {
+    super(true, BasicViewModelFactory.class);
+  }
+
   @Override
-  protected void init() {
-    if (!LoginRepository.getInstance(getApplicationContext()).isLoggedIn())
+  public void init(@Nullable Bundle savedInstanceState) {
+    super.init(savedInstanceState);
+    if (!viewModel.isLoggedIn()) {
       startActivity(new Intent(this, LoginActivity.class));
+    }
     appBarConfiguration = new AppBarConfiguration.Builder().build();
     navController = ((NavHostFragment) binding.navHostFragmentActivityHome.getFragment()).getNavController();
     NavigationUI.setupWithNavController(binding.navView, navController);
     resetNavigationViewItemSelectedListener();
     registerLogoutResultObserver();
+  }
+
+  @Override
+  public void release() {
   }
 
   private void resetNavigationViewItemSelectedListener() {
@@ -50,6 +62,7 @@ public class HomeActivity extends BasicActivityWithViewModelFactory<ActivityHome
       if (!loginResult.isSuccess()) {
         showLogoutFailed(loginResult.getMessage());
       } else {
+        viewModel.getLogoutResultState().setValue(null);
         setResult(Activity.RESULT_OK);
         closeBottomSheetDialog();
         finish();

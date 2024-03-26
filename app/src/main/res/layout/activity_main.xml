@@ -13,84 +13,27 @@
       android:layout_height="match_parent"
       android:orientation="vertical"
       android:gravity="center">
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RadioGroup
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:orientation="horizontal">
-
-          <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:button="@null"
-            android:gravity="center"
-            android:text="昨日" />
-
-          <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:checked="true"
-            android:button="@null"
-            android:gravity="center"
-            android:text="今日" />
-        </RadioGroup>
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginStart="10dp"
-          android:text="2024年3月15日" />
-
-        <CheckBox
-          android:id="@+id/checkBox"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:background="@drawable/bg_button"
-          android:text="CheckBox" />
-
-      </LinearLayout>
-
-      <TextView
-        android:id="@+id/sample_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
 
       <Button
         android:id="@+id/button_start_service"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickStartService"
-        android:text="start_service" />
+        android:text="@string/start_service" />
 
       <Button
         android:id="@+id/button_stop_service"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickStopService"
-        android:text="stop_service" />
+        android:text="@string/stop_service" />
 
       <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="@string/empty_content" />
 
-      <SearchView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:queryHint="testtejsktjsl"
-        android:iconifiedByDefault="false"
-        android:goIcon="@drawable/ic_add_16dp"
-        android:commitIcon="@drawable/ic_lock_24dp"/>
     </LinearLayout>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

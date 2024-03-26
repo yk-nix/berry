@@ -1,11 +1,13 @@
 package com.vroad.app.berry.net;
 
+import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.elvishew.xlog.XLog;
+import com.vroad.app.berry.data.enums.ResultStatusEnum;
 import com.vroad.app.berry.data.pojo.LoggedInUser;
 import com.vroad.app.berry.data.repository.LoginRepository;
 
@@ -39,22 +41,19 @@ public class RetrofitService<API> {
     try {
       return func.apply(t).execute().body();
     } catch (Exception e) {
-      XLog.d(e);
-      return null;
+      return new Result<R>(ResultStatusEnum.ERROR, e.getMessage());
     }
   }
 
-  @Nullable
   public <R> Result<R> call(Callable<Call<Result<R>>> func) {
     try {
       return func.call().execute().body();
     } catch (Exception e) {
-      XLog.d(e);
-      return null;
+      return new Result<R>(ResultStatusEnum.ERROR, e.getMessage());
     }
   }
 
-  public static void init(Context appContext, String baseUrl) {
+  public static void init(Application app, String baseUrl) {
     OkHttpClient.Builder client = new OkHttpClient.Builder();
     client.addInterceptor(new Interceptor() {
       @NonNull
@@ -62,7 +61,7 @@ public class RetrofitService<API> {
       public Response intercept(@NonNull Chain chain) throws IOException {
         Request original = chain.request();
         Request.Builder builder = original.newBuilder();
-        LoggedInUser user = LoginRepository.getInstance(appContext).getUser();
+        LoggedInUser user = LoginRepository.getInstance(app).getUser();
         if (user != null && user.getToken() != null)
           builder.header("token", user.getToken());
         builder.method(original.method(), original.body());

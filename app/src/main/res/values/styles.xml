@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- *********************************** divider-line ********************************* -->
+  <color name="shape_rectangle_background_color">@color/transparent</color>
+  <dimen name="shape_rectangle_corner_radius">@dimen/dimen_8dp</dimen>
+</resources>

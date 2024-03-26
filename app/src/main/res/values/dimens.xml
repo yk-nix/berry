@@ -3,4 +3,9 @@
   <dimen name="activity_horizontal_margin">16dp</dimen>
   <dimen name="activity_vertical_margin">16dp</dimen>
   <dimen name="task_entry_label_width">60dp</dimen>
+  <dimen name="device_info_label_width">80dp</dimen>
+  <dimen name="device_info_content_width">100dp</dimen>
+  <dimen name="device_info_entry_height">18dp</dimen>
+
+  <dimen name="dimen_8dp">8dp</dimen>
 </resources>

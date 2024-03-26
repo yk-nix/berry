@@ -3,7 +3,7 @@ package com.vroad.app.berry.data.adapter;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.vroad.app.basic.date.DateTimeFormatters;
+import com.vroad.app.libui.date.DateTimeFormatters;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

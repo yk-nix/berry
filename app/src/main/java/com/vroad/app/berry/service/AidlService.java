@@ -3,9 +3,8 @@ package com.vroad.app.berry.service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.os.RemoteException;
 
-import com.vroad.app.basic.common.BasicService;
+import com.vroad.app.libui.base.BasicService;
 import com.vroad.app.berry.aidl.IPersonManager;
 import com.vroad.app.berry.data.pojo.Person;
 
@@ -26,16 +25,16 @@ public class AidlService extends BasicService {
 
   private final Binder binder = new IPersonManager.Stub() {
     @Override
-    public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
+    public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) {
     }
 
     @Override
-    public List<Person> getList() throws RemoteException {
+    public List<Person> getList() {
       return list;
     }
 
     @Override
-    public void add(Person person) throws RemoteException {
+    public void add(Person person) {
       list.add(person);
     }
   };

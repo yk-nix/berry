@@ -1,6 +1,6 @@
 <resources>
   <string name="app_name">berry</string>
-  <string name="title_activity_login">LoginActivity</string>
+  <string name="title_activity_login">登录</string>
   <string name="prompt_email">Email</string>
   <string name="prompt_password">Password</string>
   <string name="action_sign_in">Sign in or register</string>
@@ -12,10 +12,10 @@
   <string name="empty_content">""</string>
 
 
-  <string name="title_activity_home">HomeActivity</string>
+<!--  <string name="title_activity_home">HomeActivity</string>-->
   <string name="title_fragment_tasks">我的工单</string>
   <string name="title_fragment_task_detail">工单详细信息</string>
-  <string name="title_fragment_dashboard">Dashboard</string>
+  <string name="title_fragment_dashboard">设备分布</string>
   <string name="title_fragment_settings">设置</string>
 
 
@@ -42,5 +42,9 @@
   <string name="date_selector_calendar">日历</string>
   <string name="date_format">%04d年%02d月%02d日</string>
   <string name="date_selector_error">日期不能选择比今天更前的日期!</string>
+  <string name="start_service">start_service</string>
+  <string name="stop_service">stop_service</string>
+  <string name="device_info_id">设备编号</string>
+  <string name="device_info_ip">IP</string>
 
 </resources>

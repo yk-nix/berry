@@ -14,14 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.elvishew.xlog.XLog;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
-import com.vroad.app.basic.common.BasicFragmentWithViewModel;
+import com.vroad.app.libui.base.AbstractApplication;
+import com.vroad.app.libui.base.BasicFragment;
 import com.vroad.app.berry.R;
 import com.vroad.app.berry.data.pojo.Task;
 import com.vroad.app.berry.databinding.FragmentTasksBinding;
@@ -35,11 +38,16 @@ import java.util.List;
 
 import lombok.Setter;
 
-public class TasksFragment extends BasicFragmentWithViewModel<FragmentTasksBinding, TasksViewModel> {
-  LocalDateTime today = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
+public class TasksFragment extends BasicFragment<FragmentTasksBinding, TasksViewModel> {
+  private final LocalDateTime today = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
+
+  public TasksFragment() {
+    super(false);
+  }
 
   @Override
-  protected void init() {
+  public void init(@Nullable Bundle savedInstanceState) {
+    super.init(savedInstanceState);
     LocalDateTime date = viewModel.getDate();
     if (date == null)
       date = today;
@@ -52,11 +60,13 @@ public class TasksFragment extends BasicFragmentWithViewModel<FragmentTasksBindi
     viewModel.getFreshResultState().observe(getViewLifecycleOwner(), refreshResultObserver);
     viewModel.getLoadMoreResultState().observe(getViewLifecycleOwner(), loadMoreResultObserver);
     initRadioButtons(date);
+    binding.rtbDateSelectorToday.setOnCheckedChangeListener(onRadioButtonCheckedChangeListener);
+    binding.rtbDateSelectorYesterday.setOnCheckedChangeListener(onRadioButtonCheckedChangeListener);
     binding.calendar.setOnClickListener(onCalendarClickedListener);
   }
 
   @Override
-  protected void release() {
+  public void release() {
     viewModel.getTasks().removeObserver(taskObserver);
     viewModel.getFreshResultState().removeObserver(refreshResultObserver);
     viewModel.getLoadMoreResultState().removeObserver(loadMoreResultObserver);
@@ -69,9 +79,9 @@ public class TasksFragment extends BasicFragmentWithViewModel<FragmentTasksBindi
       focusOnRadioButton(binding.rtbDateSelectorToday);
     else if (date.isEqual(today.minusDays(1)))
       focusOnRadioButton(binding.rtbDateSelectorYesterday);
-    setDateTextViewValue(date);
-    binding.rtbDateSelectorToday.setOnCheckedChangeListener(onRadioButtonCheckedChangeListener);
-    binding.rtbDateSelectorYesterday.setOnCheckedChangeListener(onRadioButtonCheckedChangeListener);
+    //setDateTextViewValue(date);
+    // ----------------  for test -----------------------
+    setDateTextViewValue(LocalDateTime.of(2023,10, 26, 0, 0));
   }
 
   private void focusOnRadioButton(@NonNull CompoundButton button) {
@@ -94,6 +104,7 @@ public class TasksFragment extends BasicFragmentWithViewModel<FragmentTasksBindi
   }
 
   private final Observer<List<Task>> taskObserver = tasks -> {
+    XLog.i("%s", tasks);
     binding.taskRecycleView.setAdapter(new TaskViewAdapter(tasks));
     if (tasks.isEmpty() && !binding.noDataMessage.isShown()) {
       binding.noDataMessage.setVisibility(View.VISIBLE);
@@ -154,8 +165,8 @@ public class TasksFragment extends BasicFragmentWithViewModel<FragmentTasksBindi
   };
 
   @Override
-  public Class<FragmentTasksBinding> getViewBindingClassType() {
-    return super.getViewBindingClassType();
+  public AbstractApplication getAbstractApplication() {
+    return (AbstractApplication) requireActivity().getApplication();
   }
 
   /*-------------------------------------------------------------------------*/

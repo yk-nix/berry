@@ -3,25 +3,27 @@ package com.vroad.app.berry.ui.login;
 import android.util.Patterns;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
+import com.vroad.app.libui.base.AbstractApplication;
+import com.vroad.app.libui.base.BasicViewModel;
 import com.vroad.app.berry.R;
 import com.vroad.app.berry.data.pojo.LoggedInUser;
-import com.vroad.app.berry.net.Result;
 import com.vroad.app.berry.data.repository.LoginRepository;
+import com.vroad.app.berry.net.Result;
 import com.vroad.app.berry.ui.common.OperationResult;
 
 import lombok.Getter;
 
-public class LoginViewModel extends ViewModel {
+public class LoginViewModel extends BasicViewModel {
   @Getter
   private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
   @Getter
   private MutableLiveData<OperationResult> loginResult = new MutableLiveData<>();
   private final LoginRepository loginRepository;
 
-  LoginViewModel(LoginRepository loginRepository) {
-    this.loginRepository = loginRepository;
+  public LoginViewModel(AbstractApplication abstractApplication) {
+    super(abstractApplication);
+    loginRepository = LoginRepository.getInstance(abstractApplication);
   }
 
   public void login(String username, String password) {
@@ -29,7 +31,7 @@ public class LoginViewModel extends ViewModel {
     new Thread(() -> {
       Result<LoggedInUser> result = loginRepository.login(username, password);
       if (result == null) {
-        loginResult.postValue(new OperationResult(false, R.string.login_failed));
+        loginResult.postValue(new OperationResult(false, "error"));
       } else if (result.OK())
         loginResult.postValue(new OperationResult(true, null));
       else {

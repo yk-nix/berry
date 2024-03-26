@@ -46,6 +46,34 @@
     <item name="boxCornerRadiusTopEnd">@dimen/corner_radius</item>
     <item name="boxCornerRadiusTopStart">@dimen/corner_radius</item>
   </style>
+  <style name="Theme.Berry.Dialog">
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowFrame">@null</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowIsFloating">true</item>
+    <item name="android:windowIsTranslucent">false</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:backgroundDimEnabled">true</item>
+  </style>
+  <style name="Theme.Berry.Dialog.DeviceInfoLabel">
+    <item name="android:layout_width">@dimen/device_info_label_width</item>
+    <item name="android:layout_height">@dimen/device_info_entry_height</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:gravity">end</item>
+    <item name="android:layout_marginEnd">10dp</item>
+    <item name="android:textSize">13sp</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+  <style name="Theme.Berry.Dialog.DeviceInfoContent">
+    <item name="android:layout_width">@dimen/device_info_content_width</item>
+    <item name="android:layout_height">@dimen/device_info_entry_height</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:textSize">12sp</item>
+  </style>
+  <style name="Theme.Berry.SearchView">
+    <item name="android:tint">@color/green</item>
+    <item name="android:textSize">13sp</item>
+  </style>
 
   <!-- ********************************* divider line ********************************** -->
   <style name="ConstraintLayout"/>

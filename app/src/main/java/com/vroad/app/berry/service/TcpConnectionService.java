@@ -2,20 +2,23 @@ package com.vroad.app.berry.service;
 
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 
+import androidx.annotation.RequiresApi;
+
 import com.elvishew.xlog.XLog;
-import com.vroad.app.basic.common.BasicService;
+import com.vroad.app.libui.base.BasicService;
 
 import java.io.IOException;
-import java.io.InterruptedIOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+@RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public class TcpConnectionService extends BasicService {
   private Thread thread;
   private final String host = "192.168.3.241";
@@ -26,6 +29,7 @@ public class TcpConnectionService extends BasicService {
   public TcpConnectionService() {
     super(true);
   }
+
 
   @Override
   protected IBinder getBinder(Intent intent) {

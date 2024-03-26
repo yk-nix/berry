@@ -1,27 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context=".ui.dashboard.DashboardFragment">
-
-  <LinearLayout
+  xmlns:tools="http://schemas.android.com/tools">
+  <data>
+    <import type="com.vroad.app.libui.utils.UtilsUI" />
+    <import type="android.graphics.Color" />
+    <import type="com.vroad.app.berry.adapter.DataBindingAdapters.ShapeType"/>
+  </data>
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".ui.dashboard.DashboardFragment">
 
-    <androidx.appcompat.widget.Toolbar
-      android:id="@+id/toolbar"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:minHeight="0dp"
-      app:title="@string/title_fragment_dashboard" />
-
-    <com.baidu.mapapi.map.MapView
+    <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:clickable="true"/>
+      android:orientation="vertical">
 
-  </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+      <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="0dp"
+        app:title="@string/title_fragment_dashboard" />
+
+      <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.baidu.mapapi.map.MapView
+          android:id="@+id/mapview"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:clickable="true" />
+
+        <SearchView
+          style="@style/Theme.Berry.SearchView"
+          android:layout_width="match_parent"
+          android:layout_height="30dp"
+          android:layout_gravity="end"
+          android:layout_marginHorizontal="30dp"
+          android:layout_marginTop="20dp"
+          android:iconifiedByDefault="true"
+          android:queryHint="输入设备IP或编号关键字"
+          app:shapeBackgroundType="@{ShapeType.rectangle}"
+          app:shapeBackgroundColor="@{@color/green}"/>
+      </FrameLayout>
+
+    </LinearLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

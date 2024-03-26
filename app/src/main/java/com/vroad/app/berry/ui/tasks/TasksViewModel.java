@@ -4,10 +4,10 @@ import android.os.SystemClock;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.vroad.app.basic.date.DateTimeFormatters;
-import com.vroad.app.basic.utils.AppUtils;
+import com.vroad.app.libui.base.AbstractViewModel;
+import com.vroad.app.libui.date.DateTimeFormatters;
+import com.vroad.app.libui.utils.AppUtils;
 import com.vroad.app.berry.data.enums.ConditionType;
 import com.vroad.app.berry.data.enums.OperatorEnum;
 import com.vroad.app.berry.data.pojo.Condition;
@@ -23,7 +23,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
-public class TasksViewModel extends ViewModel {
+public class TasksViewModel extends AbstractViewModel {
   @Getter
   private final MutableLiveData<List<Task>> tasks = new MutableLiveData<>();
   @Getter

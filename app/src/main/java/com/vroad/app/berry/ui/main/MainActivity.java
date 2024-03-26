@@ -1,40 +1,34 @@
 package com.vroad.app.berry.ui.main;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.WindowDecorActionBar;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.Observer;
-import androidx.work.WorkInfo;
 
+import com.baidu.mapapi.CoordType;
+import com.baidu.mapapi.SDKInitializer;
 import com.elvishew.xlog.XLog;
-import com.vroad.app.basic.common.BasicActivityWithViewModelFactory;
-import com.vroad.app.basic.io.UriFile;
+import com.vroad.app.libui.base.BasicActivity;
+import com.vroad.app.libui.base.BasicViewModelFactory;
+import com.vroad.app.libui.io.UriFile;
 import com.vroad.app.berry.databinding.ActivityMainBinding;
-import com.vroad.app.berry.service.TcpConnectionService;
 import com.vroad.app.berry.ui.home.HomeActivity;
-import com.vroad.app.libui.utils.UtilsUI;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
-public class MainActivity extends BasicActivityWithViewModelFactory<ActivityMainBinding, MainViewModel, MainViewModelFactory> {
+public class MainActivity extends BasicActivity<ActivityMainBinding, MainViewModel> {
 
   // Used to load the 'berry' library on application startup.
   static {
@@ -42,8 +36,9 @@ public class MainActivity extends BasicActivityWithViewModelFactory<ActivityMain
   }
 
   public MainActivity() {
-    super(true);
+    super(false, BasicViewModelFactory.class);
   }
+
 
   /**
    * A native method that is implemented by the 'berry' native library,
@@ -61,14 +56,15 @@ public class MainActivity extends BasicActivityWithViewModelFactory<ActivityMain
   private UriFile lastCreatedTextDocument = null;
 
   @Override
-  protected void init() {
+  public void init(@Nullable Bundle savedInstanceState) {
+    super.init(savedInstanceState);
     // register notification channels
     NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     nm.createNotificationChannel(new NotificationChannel(NORMAL_CHANNEL_ID, "普通通知", NotificationManager.IMPORTANCE_LOW));
     nm.createNotificationChannel(new NotificationChannel(IMPORTANT_CHANNEL_ID, "重要通知", NotificationManager.IMPORTANCE_HIGH));
 
     // initialize activity view
-    binding.sampleText.setText(stringFromJNI());
+//    binding.sampleText.setText(stringFromJNI());
 
     if (!nm.areNotificationsEnabled()) {
       initNotificationSettings();
@@ -78,19 +74,18 @@ public class MainActivity extends BasicActivityWithViewModelFactory<ActivityMain
 
     // register observers
     registerObservers();
+  }
 
-    binding.radioButton.setOnCheckedChangeListener(onCheckedChangeListener);
-    binding.radioButton2.setOnCheckedChangeListener(onCheckedChangeListener);
+  @Override
+  public void release() {
+
   }
 
   public void registerObservers() {
-    viewModel.getWorkInfo().observe(this, new Observer<List<WorkInfo>>() {
-      @Override
-      public void onChanged(List<WorkInfo> workInfos) {
-        if (workInfos == null || workInfos.isEmpty())
-          return;
-        XLog.i("--- work-info changed %s", workInfos.get(0).getState());
-      }
+    viewModel.getWorkInfo().observe(this, workInfos -> {
+      if (workInfos == null || workInfos.isEmpty())
+        return;
+      XLog.i("--- work-info changed %s", workInfos.get(0).getState());
     });
   }
 
@@ -115,7 +110,11 @@ public class MainActivity extends BasicActivityWithViewModelFactory<ActivityMain
     );
     requestPermissionsLauncher = registerForActivityResult(
         new ActivityResultContracts.RequestMultiplePermissions(),
-        ret -> XLog.i("--- permission request: %s", ret)
+        permMap -> {
+          if (!permMap.values().stream().allMatch((e) -> e)) {
+            finish();
+          }
+        }
     );
   }
 
@@ -127,74 +126,29 @@ public class MainActivity extends BasicActivityWithViewModelFactory<ActivityMain
 
   public void onClickStartService(View view) {
     try {
-
-//      LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
       if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
           ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        requestPermissionsLauncher.launch(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
+        requestPermissionsLauncher.launch(new String[]{
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+        });
         return;
       }
+      XLog.i("-------- check ACCESS_FINE_LOCATION ---> OK");
+      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+        requestPermissionsLauncher.launch(new String[]{Manifest.permission.READ_PHONE_STATE});
+        return;
+      }
+      XLog.i("-------- check READ_PHONE_STATE ---> OK");
+      SDKInitializer.initialize(getApplicationContext());
+      SDKInitializer.setCoordType(CoordType.BD09LL);
       startActivity(new Intent(this, HomeActivity.class));
-//      locationManager.getAllProviders().forEach(provider -> {
-//        XLog.i("--- %s(%s): %s",
-//            provider,
-//            locationManager.isProviderEnabled(provider) ? "ON" : "OFF",
-//            locationManager.getProviderProperties(provider));
-//      });
-//      String provider = LocationManager.FUSED_PROVIDER;
-//      XLog.i("--- location is %s, last-known: %s",
-//          locationManager.isLocationEnabled(), locationManager.getLastKnownLocation(provider));
-//      locationManager.getCurrentLocation(
-//          provider,
-//          null,
-//          getMainExecutor(),
-//          location -> XLog.i("------ %s %s", provider, location)
-//      );
-
-//      FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
-//      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-//          ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//        requestPermissionsLauncher.launch(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
-//      }
-//      LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-//      if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-//      }
-//      LocationRequest locationRequest = new LocationRequest.Builder(PRIORITY_HIGH_ACCURACY, 5000).build();
-//      client.requestLocationUpdates(locationRequest, getMainExecutor(), location -> {
-//        XLog.i("-- %s", location);
-//      });
-
-//      CurrentLocationRequest currentLocationRequest = new CurrentLocationRequest.Builder().setPriority(PRIORITY_HIGH_ACCURACY).build();
-//      client.getCurrentLocation(currentLocationRequest, null)
-//          .addOnSuccessListener(location -> XLog.i("--current location: %s", location));
-//      client.getLastLocation().addOnSuccessListener(location -> XLog.i("--last location: %s" , location));
-
-//      startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-//      locationManager.requestLocationUpdates(
-//          provider,
-//          0,
-//          0L,
-//          location -> XLog.i("-- %s location: %s", provider, location)
-//      );
     } catch (Exception e) {
-      e.printStackTrace();
+      XLog.e(e);
     }
   }
 
-  private CompoundButton.OnCheckedChangeListener onCheckedChangeListener = (buttonView, isChecked) -> {
-    int paintFlags = buttonView.getPaintFlags();
-    if (isChecked) {
-      buttonView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG | Paint.FAKE_BOLD_TEXT_FLAG | paintFlags);
-    } else {
-      buttonView.setPaintFlags(~(Paint.UNDERLINE_TEXT_FLAG | Paint.FAKE_BOLD_TEXT_FLAG) & paintFlags);
-    }
-    XLog.i("---------%s %s", buttonView.getText(), isChecked);
-  };
-
-
   public void onClickStopService(View view) {
     //AppUtils.exec(LoginRepository.getInstance(getApplicationContext())::logout, XLog::i);
-    stopService(new Intent(this, TcpConnectionService.class));
   }
 }

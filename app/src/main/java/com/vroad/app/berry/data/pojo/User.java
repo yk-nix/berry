@@ -1,6 +1,6 @@
 package com.vroad.app.berry.data.pojo;
 
-import com.vroad.app.basic.io.exSerializable;
+import com.vroad.app.libui.io.exSerializable;
 import com.vroad.app.berry.data.enums.EnableStatusEnum;
 
 import java.util.List;

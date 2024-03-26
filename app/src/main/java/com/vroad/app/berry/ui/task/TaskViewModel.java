@@ -1,4 +1,6 @@
 package com.vroad.app.berry.ui.task;
 
-public class TaskViewModel {
+import com.vroad.app.libui.base.AbstractViewModel;
+
+public class TaskViewModel extends AbstractViewModel {
 }

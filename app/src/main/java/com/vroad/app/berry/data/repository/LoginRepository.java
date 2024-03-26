@@ -1,10 +1,10 @@
 package com.vroad.app.berry.data.repository;
 
-import android.content.Context;
+import android.app.Application;
 
 import androidx.annotation.Nullable;
 
-import com.vroad.app.basic.io.FileUtils;
+import com.vroad.app.libui.io.FileUtils;
 import com.vroad.app.berry.data.datasource.LoginDataSource;
 import com.vroad.app.berry.data.pojo.LoggedInUser;
 import com.vroad.app.berry.net.Result;
@@ -21,21 +21,21 @@ public class LoginRepository {
   private LoggedInUser user;
   private final File userProfile;
 
-  private LoginRepository(Context appContext, LoginDataSource dataSource) {
+  private LoginRepository(Application app, LoginDataSource dataSource) {
     this.dataSource = dataSource;
-    userProfile = new File(appContext.getFilesDir(), LOGGED_IN_USER);
+    userProfile = new File(app.getFilesDir(), LOGGED_IN_USER);
     if (userProfile.exists()) {
       user = FileUtils.readAs(userProfile);
     }
   }
 
-  public static LoginRepository getInstance(Context appContext) {
-    return getInstance(appContext, new LoginDataSource());
+  public static LoginRepository getInstance(Application app) {
+    return getInstance(app, new LoginDataSource());
   }
 
-  public static LoginRepository getInstance(Context appContext, LoginDataSource dataSource) {
+  public static LoginRepository getInstance(Application app, LoginDataSource dataSource) {
     if (instance == null) {
-      instance = new LoginRepository(appContext, dataSource);
+      instance = new LoginRepository(app, dataSource);
     }
     return instance;
   }

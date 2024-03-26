@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:background="@color/gray_white">
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+      style="@style/Theme.Berry.Dialog.DeviceInfoLabel"
+      android:text="@string/device_info_id"/>
+    <TextView
+      style="@style/Theme.Berry.Dialog.DeviceInfoContent"
+      android:id="@+id/device_id"/>
+  </LinearLayout>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+    <TextView
+      style="@style/Theme.Berry.Dialog.DeviceInfoLabel"
+      android:text="@string/device_info_ip"/>
+    <TextView
+      style="@style/Theme.Berry.Dialog.DeviceInfoContent"
+      android:id="@+id/device_ip"/>
+  </LinearLayout>
+
+</LinearLayout>
