@@ -4,25 +4,24 @@ import android.app.Application;
 
 import androidx.annotation.Nullable;
 
-import com.vroad.app.libui.io.FileUtils;
 import com.vroad.app.berry.data.datasource.LoginDataSource;
 import com.vroad.app.berry.data.pojo.LoggedInUser;
 import com.vroad.app.berry.net.Result;
+import com.vroad.app.libui.io.FileUtils;
 
 import java.io.File;
 
 import lombok.Getter;
 
-public class LoginRepository {
-  public static final String LOGGED_IN_USER = "loggedInUser";
+public class LoginRepository extends AbstractRepository<LoginDataSource> {
+  private static final String LOGGED_IN_USER = "loggedInUser";
   private static volatile LoginRepository instance;
-  private final LoginDataSource dataSource;
   @Getter
   private LoggedInUser user;
   private final File userProfile;
 
   private LoginRepository(Application app, LoginDataSource dataSource) {
-    this.dataSource = dataSource;
+    super(dataSource);
     userProfile = new File(app.getFilesDir(), LOGGED_IN_USER);
     if (userProfile.exists()) {
       user = FileUtils.readAs(userProfile);
@@ -33,7 +32,7 @@ public class LoginRepository {
     return getInstance(app, new LoginDataSource());
   }
 
-  public static LoginRepository getInstance(Application app, LoginDataSource dataSource) {
+  public static synchronized LoginRepository getInstance(Application app, LoginDataSource dataSource) {
     if (instance == null) {
       instance = new LoginRepository(app, dataSource);
     }
@@ -45,7 +44,7 @@ public class LoginRepository {
   }
 
   private void setLoggedInUser(LoggedInUser user) {
-    user.saveAs(userProfile);
+    user.toFile(userProfile);
     this.user = user;
   }
 

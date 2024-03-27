@@ -137,9 +137,11 @@ public abstract class AbstractFragment
     if (viewModelClass == null)
       return;
     if (viewModelFactoryClass == null) {
-      _viewModel = createViewModel(abstractActivity, viewModelClass);
+      _viewModel = createViewModel(viewModelClass);
     } else {
-      _viewModel = createViewModel(abstractActivity, viewModelClass, viewModelFactoryClass, creationExtras);
+      if (creationExtras == null)
+        creationExtras = getAbstractActivity().getDefaultViewModelCreationExtras();
+      _viewModel = createViewModel(viewModelClass, viewModelFactoryClass, creationExtras);
     }
   }
 

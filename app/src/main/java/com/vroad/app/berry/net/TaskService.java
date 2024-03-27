@@ -20,7 +20,6 @@ public class TaskService extends RetrofitService<TaskService.Api> {
 
   @Nullable
   public Result<List<Task>> list(DynamicQueryParameter param) {
-    XLog.i("--param: %s", param);
     return call(api::list, param);
   }
 }

@@ -6,6 +6,7 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.viewbinding.ViewBinding;
 
 public abstract class BasicActivity<B extends ViewBinding, M extends AbstractViewModel>
@@ -51,6 +52,11 @@ public abstract class BasicActivity<B extends ViewBinding, M extends AbstractVie
   public void init(@Nullable Bundle savedInstanceState) {
     binding = getViewBinding();
     viewModel = getViewModel();
+  }
+
+  @Override
+  public ViewModelStoreOwner getViewModelStoreOwner() {
+    return this;
   }
 
   @Override

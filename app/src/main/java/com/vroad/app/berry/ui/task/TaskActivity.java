@@ -5,10 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
-import com.vroad.app.libui.base.BasicActivity;
 import com.vroad.app.berry.R;
 import com.vroad.app.berry.data.pojo.Task;
 import com.vroad.app.berry.databinding.ActivityTaskBinding;
+import com.vroad.app.libui.base.BasicActivity;
 
 public class TaskActivity extends BasicActivity<ActivityTaskBinding, TaskViewModel> {
   public TaskActivity() {

@@ -1,7 +1,7 @@
 package com.vroad.app.berry.data.pojo;
 
 import com.google.gson.annotations.JsonAdapter;
-import com.vroad.app.berry.data.adapter.LogTimestampSecondAdapter;
+import com.vroad.app.berry.adapter.JsonAdapters;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ public class Task implements Serializable {
   public static final String TAG = "TASK";
   private String id;
   private String note;
-  @JsonAdapter(LogTimestampSecondAdapter.class)
+  @JsonAdapter(JsonAdapters.LogTimestampSecondAdapter.class)
   private LocalDateTime createTime;
   private String creator;
   private List<User> handlers;

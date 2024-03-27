@@ -1,7 +1,7 @@
 package com.vroad.app.berry.data.pojo;
 
 import com.google.gson.annotations.JsonAdapter;
-import com.vroad.app.berry.data.adapter.LogTimestampSecondAdapter;
+import com.vroad.app.berry.adapter.JsonAdapters;
 import com.vroad.app.berry.data.enums.ProblemEnum;
 import com.vroad.app.berry.data.enums.ProblemStatusEnum;
 
@@ -15,15 +15,15 @@ public class Problem implements Serializable {
   private String id;
   private String deviceId;
   private String detectRuleId;
-  @JsonAdapter(LogTimestampSecondAdapter.class)
+  @JsonAdapter(JsonAdapters.LogTimestampSecondAdapter.class)
   private LocalDateTime detectTime;
   private ProblemStatusEnum status;
   private ProblemEnum problem;
-  @JsonAdapter(LogTimestampSecondAdapter.class)
+  @JsonAdapter(JsonAdapters.LogTimestampSecondAdapter.class)
   private LocalDateTime closeTime;
-  @JsonAdapter(LogTimestampSecondAdapter.class)
+  @JsonAdapter(JsonAdapters.LogTimestampSecondAdapter.class)
   private LocalDateTime predictCloseTime;
-  @JsonAdapter(LogTimestampSecondAdapter.class)
+  @JsonAdapter(JsonAdapters.LogTimestampSecondAdapter.class)
   private LocalDateTime feedbackTime;
   private String detectRule;
   private String note;

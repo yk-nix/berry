@@ -15,11 +15,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.vroad.app.libui.base.BasicActivity;
-import com.vroad.app.libui.base.BasicViewModelFactory;
 import com.vroad.app.berry.R;
 import com.vroad.app.berry.databinding.ActivityHomeBinding;
 import com.vroad.app.berry.ui.login.LoginActivity;
+import com.vroad.app.libui.base.BasicActivity;
+import com.vroad.app.libui.base.BasicViewModelFactory;
 
 import lombok.Getter;
 
@@ -62,7 +62,7 @@ public class HomeActivity extends BasicActivity<ActivityHomeBinding, HomeViewMod
       if (!loginResult.isSuccess()) {
         showLogoutFailed(loginResult.getMessage());
       } else {
-        viewModel.getLogoutResultState().setValue(null);
+//        viewModel.getLogoutResultState().setValue(null);
         setResult(Activity.RESULT_OK);
         closeBottomSheetDialog();
         finish();

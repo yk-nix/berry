@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.vroad.app.berry.databinding.ActivityLoginBinding;
 import com.vroad.app.libui.base.BasicActivity;
 import com.vroad.app.libui.base.BasicViewModelFactory;
-import com.vroad.app.berry.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends BasicActivity<ActivityLoginBinding, LoginViewModel> {
   public LoginActivity() {

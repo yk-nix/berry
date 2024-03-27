@@ -7,10 +7,10 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import com.vroad.app.libui.base.AbstractApplication;
-import com.vroad.app.libui.base.BasicViewModel;
 import com.vroad.app.berry.data.pojo.User;
 import com.vroad.app.berry.workers.TestWorker;
+import com.vroad.app.libui.base.AbstractApplication;
+import com.vroad.app.libui.base.BasicViewModel;
 
 import java.util.List;
 
@@ -27,7 +27,6 @@ public class MainViewModel extends BasicViewModel {
     workManager = WorkManager.getInstance(application.getApplicationContext());
     workInfo = workManager.getWorkInfosByTagLiveData(WORKER_TAG_TEST);
   }
-
 
   public void startWorker() {
     workManager.beginUniqueWork("TEST_WORK", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(TestWorker.class)

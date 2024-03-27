@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,13 +24,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.elvishew.xlog.XLog;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
-import com.vroad.app.libui.base.AbstractApplication;
-import com.vroad.app.libui.base.BasicFragment;
 import com.vroad.app.berry.R;
 import com.vroad.app.berry.data.pojo.Task;
 import com.vroad.app.berry.databinding.FragmentTasksBinding;
 import com.vroad.app.berry.ui.common.OperationResult;
 import com.vroad.app.berry.ui.task.TaskActivity;
+import com.vroad.app.libui.base.AbstractApplication;
+import com.vroad.app.libui.base.BasicFragment;
 import com.vroad.app.libui.utils.UtilsUI;
 
 import java.time.LocalDateTime;
@@ -70,6 +71,11 @@ public class TasksFragment extends BasicFragment<FragmentTasksBinding, TasksView
     viewModel.getTasks().removeObserver(taskObserver);
     viewModel.getFreshResultState().removeObserver(refreshResultObserver);
     viewModel.getLoadMoreResultState().removeObserver(loadMoreResultObserver);
+  }
+
+  @Override
+  public ViewModelStoreOwner getViewModelStoreOwner() {
+    return getAbstractApplication().getViewModelStoreOwner();
   }
 
   private void initRadioButtons(@NonNull LocalDateTime date) {

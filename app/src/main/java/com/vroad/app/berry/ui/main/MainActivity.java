@@ -20,11 +20,11 @@ import androidx.core.app.ActivityCompat;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.elvishew.xlog.XLog;
+import com.vroad.app.berry.databinding.ActivityMainBinding;
+import com.vroad.app.berry.ui.home.HomeActivity;
 import com.vroad.app.libui.base.BasicActivity;
 import com.vroad.app.libui.base.BasicViewModelFactory;
 import com.vroad.app.libui.io.UriFile;
-import com.vroad.app.berry.databinding.ActivityMainBinding;
-import com.vroad.app.berry.ui.home.HomeActivity;
 
 import java.util.stream.Collectors;
 

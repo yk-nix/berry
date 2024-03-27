@@ -30,12 +30,12 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.vroad.app.libui.base.AbstractApplication;
-import com.vroad.app.libui.base.BasicFragment;
-import com.vroad.app.libui.utils.ImageUtils;
 import com.vroad.app.berry.R;
 import com.vroad.app.berry.data.pojo.Device;
 import com.vroad.app.berry.databinding.FragmentDashboardBinding;
+import com.vroad.app.libui.base.AbstractApplication;
+import com.vroad.app.libui.base.BasicFragment;
+import com.vroad.app.libui.utils.ImageUtils;
 import com.vroad.app.libui.utils.UtilsUI;
 
 import java.util.List;

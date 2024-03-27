@@ -1,7 +1,7 @@
 package com.vroad.app.berry.data.pojo;
 
 import com.google.gson.annotations.JsonAdapter;
-import com.vroad.app.berry.data.adapter.LogTimestampSecondAdapter;
+import com.vroad.app.berry.adapter.JsonAdapters;
 import com.vroad.app.berry.data.enums.ActivateStatusEnum;
 import com.vroad.app.berry.data.enums.DeviceStatusEnum;
 
@@ -34,7 +34,7 @@ public class Device implements Serializable {
   private DeviceStatusEnum status;
   private ActivateStatusEnum activateStatus;
   private String department;
-  @JsonAdapter(LogTimestampSecondAdapter.class)
+  @JsonAdapter(JsonAdapters.LogTimestampSecondAdapter.class)
   private LocalDateTime lastCheck;
   private String problemPhoto1;
   private String problemPhoto2;

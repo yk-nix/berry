@@ -124,9 +124,11 @@ public abstract class AbstractActivity
       return;
     }
     if (viewModelFactoryClass == null) {
-      _viewModel = createViewModel(this, viewModelClass);
+      _viewModel = createViewModel(viewModelClass);
     } else {
-      _viewModel = createViewModel(this, viewModelClass, viewModelFactoryClass, creationExtras);
+      if (creationExtras == null)
+        creationExtras = getDefaultViewModelCreationExtras();
+      _viewModel = createViewModel(viewModelClass, viewModelFactoryClass, creationExtras);
     }
   }
 

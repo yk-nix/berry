@@ -12,7 +12,7 @@ import androidx.databinding.BindingAdapter;
 import com.elvishew.xlog.XLog;
 import com.vroad.app.libui.utils.UtilsUI;
 
-public class DataBindingAdapters {
+public class BindingAdapters {
   public static enum ShapeType {
     rectangle,
     oval,
@@ -23,11 +23,12 @@ public class DataBindingAdapters {
   @BindingAdapter(value = {"shapeBackgroundType", "shapeBackgroundColor"}, requireAll = true)
   public static void setShapeBackground(View view,
                                         ShapeType shapeBackgroundType,
-                                        @ColorRes int shapeBackgroundColor) {
-    XLog.i("-----------shape: %s  %d---------", shapeBackgroundType, shapeBackgroundColor);
+                                        @ColorInt int shapeBackgroundColor) {
+    XLog.i("-----------shape: %s  %x---------", shapeBackgroundType, shapeBackgroundColor);
     Context context = view.getContext();
-    view.setBackground(UtilsUI.getRectangleShapeDrawable(
-        Color.GREEN,
+    view.setBackground(UtilsUI.getShapeDrawable(
+        shapeBackgroundType.ordinal(),
+        shapeBackgroundColor,
         1,
         Color.BLACK,
         1.0F,

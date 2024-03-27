@@ -5,9 +5,9 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import com.vroad.app.libui.base.BasicFragment;
 import com.vroad.app.berry.databinding.FragmentSettingsBinding;
 import com.vroad.app.berry.ui.home.HomeActivity;
+import com.vroad.app.libui.base.BasicFragment;
 
 public class SettingsFragment extends BasicFragment<FragmentSettingsBinding, SettingsViewModel> {
   public SettingsFragment() {

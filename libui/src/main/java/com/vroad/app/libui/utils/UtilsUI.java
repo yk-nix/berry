@@ -250,23 +250,26 @@ public class UtilsUI {
     }
   }
 
-  public static Drawable getRectangleShapeDrawable(ColorStateList solidColors,
+  public static Drawable getShapeDrawable(int type,
+                                          ColorStateList solidColors,
                                           ColorStateList strokeColors, int strokeWidth,
                                           float dashWidth, float dashGap,
                                           float radius) {
     GradientDrawable gradientDrawable = new GradientDrawable();
-    gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+    gradientDrawable.setShape(type);
     gradientDrawable.setCornerRadius(radius);
     gradientDrawable.setColor(solidColors.getDefaultColor());
     gradientDrawable.setStroke(strokeWidth, strokeColors.getDefaultColor(), dashWidth, dashGap);
     return gradientDrawable;
   }
 
-  public static Drawable getRectangleShapeDrawable(@ColorInt int solidColor,
+  public static Drawable getShapeDrawable(int type,
+                                          @ColorInt int solidColor,
                                           @ColorInt int strokeColor, int strokeWidth,
                                           float dashWidth, float dashGap,
                                           float radius) {
-    return getRectangleShapeDrawable(ColorStateList.valueOf(solidColor),
+    return getShapeDrawable(type,
+        ColorStateList.valueOf(solidColor),
         ColorStateList.valueOf(strokeColor), strokeWidth, dashWidth, dashGap,
         radius);
   }
