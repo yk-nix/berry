@@ -1,20 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/main"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
   tools:context=".ui.task.TaskActivity">
 
-  <TextView
-    android:id="@+id/test_text"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/app_name"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"/>
+  <data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <import type="java.time.format.DateTimeFormatter" />
+
+    <variable
+      name="task"
+      type="com.vroad.app.berry.data.pojo.Task" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="10dp"
+      android:orientation="vertical"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <TextView
+        style="@style/Theme.Berry.Title"
+        android:text="@string/task_info_label" />
+
+      <LinearLayout style="@style/Theme.Berry.RowContainer">
+
+        <TextView
+          style="@style/Theme.Berry.Label"
+          android:text="@string/task_id_label" />
+
+        <TextView
+          style="@style/Theme.Berry.Span"
+          android:text="@{task.getId()}" />
+
+        <TextView
+          style="@style/Theme.Berry.Label"
+          android:text="@string/task_publisher_label" />
+
+        <TextView
+          style="@style/Theme.Berry.Span.Last"
+          android:text="@{task.getPublisher().getRealName()}" />
+      </LinearLayout>
+
+      <LinearLayout
+        style="@style/Theme.Berry.RowContainer">
+
+        <TextView
+          style="@style/Theme.Berry.Label"
+          android:text="@string/task_publish_date_time" />
+
+        <TextView
+          style="@style/Theme.Berry.Span"
+          android:text='@{task.createTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))}' />
+
+        <TextView
+          style="@style/Theme.Berry.Label"
+          android:text="@string/task_dispatcher_label" />
+
+        <TextView
+          style="@style/Theme.Berry.Span.Last"
+          android:text='@{task.getHandlerNames(",")}' />
+      </LinearLayout>
+
+      <LinearLayout style="@style/Theme.Berry.RowContainer">
+
+        <TextView
+          style="@style/Theme.Berry.Label"
+          android:text="@string/task_note_label" />
+
+        <TextView
+          style="@style/Theme.Berry.Span.Last"
+          android:text="@{task.note}" />
+      </LinearLayout>
+
+      <TextView
+        style="@style/Theme.Berry.Title"
+        android:text="@string/task_device_info_label" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

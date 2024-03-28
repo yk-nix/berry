@@ -10,11 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -27,6 +27,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.vroad.app.berry.R;
 import com.vroad.app.berry.data.pojo.Task;
 import com.vroad.app.berry.databinding.FragmentTasksBinding;
+import com.vroad.app.berry.databinding.LayoutTasksEntryBinding;
 import com.vroad.app.berry.ui.common.OperationResult;
 import com.vroad.app.berry.ui.task.TaskActivity;
 import com.vroad.app.libui.base.AbstractApplication;
@@ -79,15 +80,16 @@ public class TasksFragment extends BasicFragment<FragmentTasksBinding, TasksView
   }
 
   private void initRadioButtons(@NonNull LocalDateTime date) {
+    // ------------- for test start---------------------
+    date = LocalDateTime.of(2023, 10, 26, 0, 0);
+    // ------------- for test end-----------------------
     focusOutRadioButton(binding.rtbDateSelectorToday);
     focusOutRadioButton(binding.rtbDateSelectorYesterday);
     if (date.isEqual(today))
       focusOnRadioButton(binding.rtbDateSelectorToday);
     else if (date.isEqual(today.minusDays(1)))
       focusOnRadioButton(binding.rtbDateSelectorYesterday);
-    //setDateTextViewValue(date);
-    // ----------------  for test -----------------------
-    setDateTextViewValue(LocalDateTime.of(2023,10, 26, 0, 0));
+    setDateTextViewValue(date);
   }
 
   private void focusOnRadioButton(@NonNull CompoundButton button) {
@@ -175,25 +177,10 @@ public class TasksFragment extends BasicFragment<FragmentTasksBinding, TasksView
     return (AbstractApplication) requireActivity().getApplication();
   }
 
-  /*-------------------------------------------------------------------------*/
-  static class TaskViewHolder extends RecyclerView.ViewHolder {
-    public TextView id;
-    public TextView content;
-    public TextView dispatcher;
-    public View root;
-
-    public TaskViewHolder(@NonNull View itemView) {
-      super(itemView);
-      id = itemView.findViewById(R.id.id);
-      content = itemView.findViewById(R.id.content);
-      dispatcher = itemView.findViewById(R.id.dispatcher);
-      root = itemView;
-    }
-  }
-
-  class TaskViewAdapter extends RecyclerView.Adapter<TaskViewHolder> {
+  class TaskViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Setter
     private List<Task> tasks;
+    LayoutTasksEntryBinding viewBinding;
 
     public TaskViewAdapter(List<Task> tasks) {
       this.tasks = tasks;
@@ -201,26 +188,27 @@ public class TasksFragment extends BasicFragment<FragmentTasksBinding, TasksView
 
     @NonNull
     @Override
-    public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-      View view = LayoutInflater.from(TasksFragment.this.getContext()).inflate(R.layout.layout_tasks_entry, parent, false);
-      TaskViewHolder taskViewHolder = new TaskViewHolder(view);
-      taskViewHolder.root.setOnClickListener((v) -> {
-        Intent intent = new Intent(getContext(), TaskActivity.class);
-        Bundle param = new Bundle();
-        intent.putExtra(Task.TAG, tasks.get(taskViewHolder.getAdapterPosition()));
-        startActivity(intent);
-      });
-      return taskViewHolder;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+      LayoutInflater layoutInflater = LayoutInflater.from(TasksFragment.this.getContext());
+      viewBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_tasks_entry, parent, false);
+      return new RecyclerView.ViewHolder(viewBinding.getRoot()) {
+      };
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-      if (tasks == null)
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+      if (tasks == null || position >= tasks.size())
         return;
       Task task = tasks.get(position);
-      holder.id.setText(task.getId());
-      holder.content.setText(task.getNote());
-      holder.dispatcher.setText(task.getPublisher().getRealName());
+      if (task != null) {
+        viewBinding.getRoot().setOnClickListener((v) -> {
+          Intent intent = new Intent(getContext(), TaskActivity.class);
+          Bundle param = new Bundle();
+          intent.putExtra(Task.TAG, task);
+          startActivity(intent);
+        });
+        viewBinding.setTask(task);
+      }
     }
 
     @Override
@@ -232,7 +220,7 @@ public class TasksFragment extends BasicFragment<FragmentTasksBinding, TasksView
     }
 
     @Override
-    public void onViewRecycled(@NonNull TaskViewHolder holder) {
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
       super.onViewRecycled(holder);
     }
   }

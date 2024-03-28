@@ -1,51 +1,60 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+
   <style name="Theme.Berry" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
     <item name="colorPrimary">@color/purple_500</item>
-<!--    <item name="colorSecondary">@color/purple_200</item>-->
+    <!--    <item name="colorSecondary">@color/purple_200</item>-->
     <item name="colorAccent">@color/green</item>
     <item name="colorPrimaryDark">@color/gray_white</item>
     <item name="android:windowLightStatusBar">true</item>
     <item name="android:colorBackground">@color/gray_white</item>
-<!--    <item name="android:textColor">@color/black</item>-->
-<!--    <item name="android:colorControlNormal">@color/yellow</item>-->
-<!--    <item name="android:textColorHint">@color/purple_500</item>-->
-<!--    <item name="android:textColorPrimary">@color/black</item>-->
+    <!--    <item name="android:textColor">@color/black</item>-->
+    <!--    <item name="android:colorControlNormal">@color/yellow</item>-->
+    <!--    <item name="android:textColorHint">@color/purple_500</item>-->
+    <!--    <item name="android:textColorPrimary">@color/black</item>-->
     <item name="materialButtonStyle">@style/Theme.Berry.ButtonStyle</item>
     <item name="toolbarStyle">@style/Theme.Berry.ToolbarStyle</item>
     <item name="actionBarStyle">@style/Theme.Berry.ActionBarStyle</item>
     <item name="bottomAppBarStyle">@style/Theme.Berry.BottomAppBarStyle</item>
     <item name="bottomNavigationStyle">@style/Theme.Berry.BottomNavigationStyle</item>
   </style>
+
   <style name="Theme.Berry.Home" parent="Theme.Berry">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
   </style>
+
   <style name="Theme.Berry.ButtonStyle" parent="@style/Widget.MaterialComponents.Button">
     <item name="android:textColor">@color/black</item>
     <item name="android:backgroundTint">@color/green</item>
   </style>
+
   <style name="Theme.Berry.ToolbarStyle" parent="@style/Widget.MaterialComponents.Toolbar">
     <item name="titleTextColor">@color/black</item>
   </style>
+
   <style name="Theme.Berry.ActionBarStyle" parent="@style/Widget.MaterialComponents.Light.ActionBar.Solid">
     <item name="background">@color/gray_white</item>
     <item name="android:icon">@drawable/ic_arrow_backward_24dp</item>
     <item name="android:tint">@color/black</item>
   </style>
+
   <style name="Theme.Berry.BottomAppBarStyle" parent="@style/Widget.MaterialComponents.BottomAppBar">
     <item name="backgroundTint">@color/gray_white</item>
   </style>
+
   <style name="Theme.Berry.BottomNavigationStyle" parent="@style/Widget.MaterialComponents.BottomNavigationView">
     <item name="android:background">@color/gray_white</item>
   </style>
-  <style name="Theme.Berry.TextInputEditText.OutlinedBox" parent="@style/Widget.Material3.TextInputEditText.OutlinedBox">
-  </style>
+
+  <style name="Theme.Berry.TextInputEditText.OutlinedBox" parent="@style/Widget.Material3.TextInputEditText.OutlinedBox"></style>
+
   <style name="Theme.Berry.TextInputEditText.OutlinedRoundBox" parent="Theme.Berry.TextInputEditText.OutlinedBox">
     <item name="boxCornerRadiusBottomStart">@dimen/corner_radius</item>
     <item name="boxCornerRadiusBottomEnd">@dimen/corner_radius</item>
     <item name="boxCornerRadiusTopEnd">@dimen/corner_radius</item>
     <item name="boxCornerRadiusTopStart">@dimen/corner_radius</item>
   </style>
+
   <style name="Theme.Berry.Dialog">
     <item name="android:windowBackground">@android:color/transparent</item>
     <item name="android:windowFrame">@null</item>
@@ -55,6 +64,7 @@
     <item name="android:windowContentOverlay">@null</item>
     <item name="android:backgroundDimEnabled">true</item>
   </style>
+
   <style name="Theme.Berry.Dialog.DeviceInfoLabel">
     <item name="android:layout_width">@dimen/device_info_label_width</item>
     <item name="android:layout_height">@dimen/device_info_entry_height</item>
@@ -64,27 +74,83 @@
     <item name="android:textSize">13sp</item>
     <item name="android:textStyle">bold</item>
   </style>
+
   <style name="Theme.Berry.Dialog.DeviceInfoContent">
     <item name="android:layout_width">@dimen/device_info_content_width</item>
     <item name="android:layout_height">@dimen/device_info_entry_height</item>
     <item name="android:layout_gravity">center_vertical</item>
     <item name="android:textSize">12sp</item>
   </style>
+
   <style name="Theme.Berry.SearchView">
     <item name="android:tint">@color/green</item>
     <item name="android:textSize">13sp</item>
   </style>
 
+  <style name="Theme.Berry.RowContainer">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:orientation">horizontal</item>
+  </style>
+
+  <style name="Theme.Berry.Title">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">@dimen/title_height</item>
+    <item name="android:gravity">bottom</item>
+    <item name="android:textSize">@dimen/title_text_size</item>
+    <item name="android:fontWeight">@dimen/text_weight_bold</item>
+  </style>
+
+  <style name="Theme.Berry.Label">
+    <item name="android:layout_width">@dimen/label_width</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:gravity">center_vertical|end</item>
+    <item name="android:layout_marginEnd">@dimen/label_margin</item>
+    <item name="android:textSize">@dimen/label_text_size</item>
+  </style>
+
+  <style name="Theme.Berry.Span">
+    <item name="android:layout_width">@dimen/span_width</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:textSize">@dimen/span_text_size</item>
+    <item name="android:textIsSelectable">true</item>
+  </style>
+
+  <style name="Theme.Berry.Span.Last">
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+
+  <style name="Theme.Berry.Icon" parent="Theme.Berry.Span">
+    <item name="android:layout_width">@dimen/icon_width</item>
+    <item name="android:layout_height">@dimen/icon_height</item>
+    <item name="android:gravity">center</item>
+  </style>
+
+  <style name="Theme.Berry.Icon.Navigator">
+    <item name="android:tint">@color/gray</item>
+  </style>
+
+  <style name="Theme.Berry.RecycleView" />
+
+  <style name="Theme.Berry.RecycleView.Entry">
+    <item name="android:background">@drawable/bg_entry</item>
+  </style>
+
+
   <!-- ********************************* divider line ********************************** -->
-  <style name="ConstraintLayout"/>
+  <style name="ConstraintLayout" />
+
   <style name="ConstraintLayout.HorizontalCenter">
     <item name="layout_constraintEnd_toEndOf">"parent"</item>
     <item name="layout_constraintStart_toStartOf">"parent"</item>
   </style>
+
   <style name="ConstraintLayout.VerticalCenter">
     <item name="layout_constraintTop_toTopOf">"parent"</item>
     <item name="layout_constraintBottom_toBottomOf">"parent"</item>
   </style>
+
   <style name="ConstraintLayout.Center" parent="ConstraintLayout.HorizontalCenter">
     <item name="layout_constraintTop_toTopOf">"parent"</item>
     <item name="layout_constraintBottom_toBottomOf">"parent"</item>

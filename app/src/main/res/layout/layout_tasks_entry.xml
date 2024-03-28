@@ -1,97 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="100dp"
-  android:clickable="true"
-  android:background="@drawable/bg_settings_item">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <LinearLayout
-    style="@style/ConstraintLayout.Center"
-    android:id="@+id/center_row"
+  <data>
+
+    <import type="java.time.format.DateTimeFormatter" />
+
+    <variable
+      name="task"
+      type="com.vroad.app.berry.data.pojo.Task" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    tools:ignore="MissingConstraints">
-    <TextView
-      android:id="@+id/content_label"
-      android:layout_width="@dimen/task_entry_label_width"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:textSize="13sp"
-      android:layout_marginEnd="10dp"
-      android:gravity="end"
-      android:text="@string/task_content_label" />
-    <TextView
-      android:id="@+id/content"
+    android:layout_height="100dp">
+
+    <LinearLayout
+      style="@style/Theme.Berry.RecycleView.Entry"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:ellipsize="end"
-      android:textSize="12sp"
-      android:lines="2"
+      android:layout_height="match_parent"
       android:gravity="center_vertical"
-      android:text="@string/task_content_test" />
-  </LinearLayout>
+      android:orientation="vertical"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
 
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layout_constraintBottom_toTopOf="@id/center_row">
-    <TextView
-      android:id="@+id/id_label"
-      android:layout_width="@dimen/task_entry_label_width"
-      android:layout_height="wrap_content"
+      <LinearLayout style="@style/Theme.Berry.RowContainer">
+
+        <TextView
+          style="@style/Theme.Berry.Label"
+          android:text="@string/task_id_label" />
+
+        <TextView
+          style="@style/Theme.Berry.Span"
+          android:text="@{task.id}" />
+
+        <TextView
+          style="@style/Theme.Berry.Label"
+          android:text="@string/task_publisher_label" />
+
+        <TextView
+          style="@style/Theme.Berry.Span.Last"
+          android:text="@{task.publisher.realName}" />
+      </LinearLayout>
+
+      <LinearLayout style="@style/Theme.Berry.RowContainer">
+
+        <TextView
+          style="@style/Theme.Berry.Label"
+          android:text="@string/task_content_label" />
+
+        <TextView
+          style="@style/Theme.Berry.Span.Last"
+          android:lines="2"
+          android:text='@{task.getContent()}' />
+      </LinearLayout>
+
+      <LinearLayout style="@style/Theme.Berry.RowContainer">
+
+        <TextView
+          style="@style/Theme.Berry.Label"
+          android:text="@string/task_publish_date_time" />
+
+        <TextView
+          style="@style/Theme.Berry.Span.Last"
+          android:text='@{task.createTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))}' />
+      </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+      style="@style/Theme.Berry.Icon.Navigator"
       android:layout_marginEnd="10dp"
-      android:gravity="end"
-      android:textSize="13sp"
-      android:text="@string/task_id_label" />
-    <TextView
-      android:id="@+id/id"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="12sp"
-      android:text="@string/task_id_test"
-      android:textIsSelectable="true" />
-
-    <TextView
-      android:id="@+id/dispatcher_label"
-      android:layout_width="@dimen/task_entry_label_width"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="50dp"
-      android:layout_marginEnd="10dp"
-      android:textSize="13sp"
-      android:gravity="end"
-      android:text="@string/task_dispatcher_label" />
-    <TextView
-      android:id="@+id/dispatcher"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="12sp"
-      android:text="@string/task_dispatcher_test" />
-  </LinearLayout>
-
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layout_constraintTop_toBottomOf="@id/center_row">
-    <TextView
-      android:id="@+id/create_time_label"
-      android:layout_width="@dimen/task_entry_label_width"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="10dp"
-      android:gravity="end"
-      android:textSize="13sp"
-      android:text="发布时间" />
-
-    <TextView
-      android:id="@+id/create_time"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="12sp"
-      android:text="2024-04-12 16:10" />
-  </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+      android:importantForAccessibility="no"
+      android:src="@drawable/ic_arrow_forward"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -2,7 +2,35 @@
   <!-- Default screen margins, per the Android Design guidelines. -->
   <dimen name="activity_horizontal_margin">16dp</dimen>
   <dimen name="activity_vertical_margin">16dp</dimen>
-  <dimen name="task_entry_label_width">60dp</dimen>
+
+  <dimen name="text_weight_normal">400</dimen>
+  <dimen name="text_weight_bold">700</dimen>
+
+  <dimen name="label_width">60dp</dimen>
+  <dimen name="label_margin">10dp</dimen>
+  <dimen name="label_text_size">13sp</dimen>
+  <dimen name="span_width">160dp</dimen>
+  <dimen name="span_text_size">12sp</dimen>
+  <dimen name="title_height">48dp</dimen>
+  <dimen name="title_text_size">14sp</dimen>
+  <dimen name="recycle_view_text_size">12sp</dimen>
+  <dimen name="icon_width">16dp</dimen>
+  <dimen name="icon_height">16dp</dimen>
+
+  <dimen name="task_info_title_height">48dp</dimen>
+  <dimen name="task_info_entry_content_width">180dp</dimen>
+  <dimen name="task_info_entry_label_width">60dp</dimen>
+  <dimen name="task_info_entry_long_label_width">100dp</dimen>
+  <dimen name="task_info_entry_label_margin_right">10dp</dimen>
+  <dimen name="task_info_entry_height">24dp</dimen>
+
+  <dimen name="recycle_view_entry_height">100dp</dimen>
+  <dimen name="recycle_view_entry_label_text_size">13sp</dimen>
+  <dimen name="recycle_view_entry_label_width">60dp</dimen>
+  <dimen name="recycle_view_entry_label_margin_right">10dp</dimen>
+  <dimen name="recycle_view_entry_content_width">160dp</dimen>
+  <dimen name="recycle_view_entry_content_text_size">12sp</dimen>
+
   <dimen name="device_info_label_width">80dp</dimen>
   <dimen name="device_info_content_width">100dp</dimen>
   <dimen name="device_info_entry_height">18dp</dimen>

@@ -43,8 +43,8 @@
           android:layout_marginTop="20dp"
           android:iconifiedByDefault="true"
           android:queryHint="输入设备IP或编号关键字"
-          app:shapeBackgroundType="@{ShapeType.rectangle}"
-          app:shapeBackgroundColor="@{@color/green}"/>
+          app:shape_background_type="@{ShapeType.rectangle}"
+          app:shape_background_color="@{@color/green}"/>
       </FrameLayout>
 
     </LinearLayout>

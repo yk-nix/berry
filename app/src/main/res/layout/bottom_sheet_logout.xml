@@ -10,7 +10,7 @@
     android:layout_height="@dimen/settings_item_height"
     android:textSize="@dimen/settings_item_text_size"
     android:text="@string/logout_note"
-    android:background="@drawable/bg_settings_item"
+    android:background="@drawable/bg_entry"
     android:gravity="center"/>
 
   <include layout="@layout/divider_horizontal_line" />
@@ -19,7 +19,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/settings_item_height"
     android:clickable="true"
-    android:background="@drawable/bg_settings_item"
+    android:background="@drawable/bg_entry"
     android:onClick="onClickLogoutConfirmed"
     android:gravity="center"
     android:text="@string/button_logout_text" />
@@ -31,6 +31,6 @@
     android:layout_marginTop="10dp"
     android:gravity="center"
     android:onClick="onClickLogoutCancel"
-    android:background="@drawable/bg_settings_item"
+    android:background="@drawable/bg_entry"
     android:text="@string/button_logout_cancel" />
 </LinearLayout>

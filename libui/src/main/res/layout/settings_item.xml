@@ -5,7 +5,7 @@
   android:id="@+id/root_layout"
   android:layout_width="match_parent"
   android:layout_height="@dimen/settings_item_height"
-  android:background="@drawable/bg_settings_item"
+  android:background="@drawable/bg_entry"
   android:clickable="true"
   android:focusable="true"
   android:gravity="center_vertical">
