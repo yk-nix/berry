@@ -1,114 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
   tools:context=".ui.tasks.TasksFragment">
 
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+  <data>
 
-    <androidx.appcompat.widget.Toolbar
-      android:id="@+id/toolbar"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:minHeight="0dp"
-      android:gravity="center_vertical"
-      app:title="@string/title_fragment_tasks" >
-      <SearchView
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_gravity="end"/>
-    </androidx.appcompat.widget.Toolbar>
+    <import type="android.view.View" />
+
+    <import type="java.time.format.DateTimeFormatter" />
+
+    <import type="java.time.LocalDateTime" />
+
+    <import type="android.graphics.Typeface" />
+
+    <variable
+      name="handlers"
+      type="com.vroad.app.berry.ui.common.Handlers" />
+
+    <variable
+      name="viewModel"
+      type="com.vroad.app.berry.ui.tasks.TasksViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:orientation="horizontal"
-      android:paddingStart="5dp"
-      android:paddingEnd="15dp">
-
-      <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-
-        <RadioButton
-          android:id="@+id/rtb_date_selector_today"
-          android:layout_width="40dp"
-          android:layout_height="30dp"
-          android:button="@null"
-          android:gravity="center"
-          android:text="@string/date_selector_today" />
-
-        <RadioButton
-          android:id="@+id/rtb_date_selector_yesterday"
-          android:layout_width="40dp"
-          android:layout_height="30dp"
-          android:button="@null"
-          android:gravity="center"
-          android:text="@string/date_selector_yesterday" />
-      </RadioGroup>
-
-      <TextView
-        android:id="@+id/tv_date_selector_value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/empty_content" />
-
-      <TextView
-        android:id="@+id/calendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        app:drawableRightCompat="@drawable/ic_date_selector_16dp" />
-    </LinearLayout>
-
-    <com.scwang.smart.refresh.layout.SmartRefreshLayout
-      android:id="@+id/smart_refresh_layout"
-      android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/white">
+      android:orientation="vertical">
 
-      <com.scwang.smart.refresh.header.BezierRadarHeader
-        android:id="@+id/task_header"
+      <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:gravity="center_vertical"
+        android:minHeight="0dp"
+        app:title="@string/title_fragment_tasks">
 
-      <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <SearchView
+          android:layout_width="wrap_content"
+          android:layout_height="20dp"
+          android:layout_gravity="end" />
+      </androidx.appcompat.widget.Toolbar>
+
+      <LinearLayout
+        style="@style/Theme.Berry.TasksFragment.Header"
+        android:paddingStart="5dp"
+        android:paddingEnd="15dp">
+
+        <RadioGroup style="@style/Theme.Berry.TasksFragment.RadioGroup">
+
+          <RadioButton
+            style="@style/Theme.Berry.TasksFragment.RadioTextButton"
+            android:background="@{viewModel.today ? @drawable/bg_underline : null}"
+            android:textColor="@{viewModel.today ? @color/green : @color/black}"
+            app:textStyle="@{viewModel.today ? Typeface.BOLD_ITALIC: Typeface.NORMAL}"
+            android:onCheckedChanged="@{(self, isChecked) -> isChecked ? viewModel.setDate(LocalDateTime.now()) : void}"
+            android:text="@string/date_selector_today" />
+
+          <RadioButton
+            style="@style/Theme.Berry.TasksFragment.RadioTextButton"
+            android:background="@{viewModel.yesterday ? @drawable/bg_underline : null}"
+            android:textColor="@{viewModel.yesterday ? @color/green : @color/black}"
+            app:textStyle="@{viewModel.yesterday ? Typeface.BOLD_ITALIC: Typeface.NORMAL}"
+            android:onCheckedChanged="@{(self, isChecked) -> isChecked ? viewModel.setDate(LocalDateTime.now().minusDays(1)) : void}"
+            android:text="@string/date_selector_yesterday" />
+        </RadioGroup>
 
         <TextView
-          android:id="@+id/no_data_message"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:text="@string/no_data_message"
-          android:visibility="gone"
-          app:drawableTopCompat="@drawable/icons8_jake_50" />
+          style="@style/Theme.Berry.Span.Flex"
+          android:gravity="center"
+          android:text="@{viewModel.date.format(DateTimeFormatter.ofPattern(`yyyy年MM月dd日`))}" />
 
-        <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/task_recycle_view"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          app:layout_constraintTop_toBottomOf="@id/task_header" />
-      </FrameLayout>
+        <ImageView
+          android:id="@+id/calendar"
+          style="@style/Theme.Berry.SelectableIcon"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:layout_marginStart="45dp"
+          android:importantForAccessibility="no"
+          android:onClick="@{()-> handlers.showDatePickerDialog(context, viewModel)}"
+          android:src="@drawable/ic_outline_calendar_month_24" />
+      </LinearLayout>
 
-      <com.scwang.smart.refresh.footer.BallPulseFooter
-        android:id="@+id/task_footer"
+      <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent" />
-    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-  </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.scwang.smart.refresh.header.BezierRadarHeader
+          android:id="@+id/task_header"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+          <TextView
+            android:id="@+id/no_data_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/no_data_message"
+            android:visibility="@{(!viewModel.loading &amp;&amp; viewModel.tasks.empty) ? View.VISIBLE : View.GONE}"
+            app:drawableTopCompat="@drawable/icons8_jake_50" />
+
+          <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}" />
+
+          <!--          <ImageView-->
+          <!--            android:layout_width="wrap_content"-->
+          <!--            android:layout_height="wrap_content"-->
+          <!--            android:src="@drawable/ic_loading_50"-->
+          <!--            android:layout_gravity="center"-->
+          <!--            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"-->
+          <!--            android:importantForAccessibility="no"/>-->
+
+          <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/task_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/task_header" />
+        </FrameLayout>
+
+        <com.scwang.smart.refresh.footer.BallPulseFooter
+          android:id="@+id/task_footer"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toBottomOf="parent" />
+      </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+    </LinearLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

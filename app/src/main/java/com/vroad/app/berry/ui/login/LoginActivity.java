@@ -1,6 +1,7 @@
 package com.vroad.app.berry.ui.login;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.elvishew.xlog.XLog;
 import com.vroad.app.berry.databinding.ActivityLoginBinding;
 import com.vroad.app.libui.base.BasicActivity;
 import com.vroad.app.libui.base.BasicViewModelFactory;
@@ -22,6 +24,12 @@ public class LoginActivity extends BasicActivity<ActivityLoginBinding, LoginView
   @Override
   public void init(@Nullable Bundle savedInstanceState) {
     super.init(savedInstanceState);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      getOnBackInvokedDispatcher().registerOnBackInvokedCallback(0, () -> {
+        XLog.i("---------------fdsfjslfjslfjs backup ------------------------------");
+      });
+    }
+
     registerLoginFormStateObserver();
     registerLoginResultObserver();
     binding.username.addTextChangedListener(textWatcher);
@@ -88,5 +96,16 @@ public class LoginActivity extends BasicActivity<ActivityLoginBinding, LoginView
 
   private void showLoginFailed(String message) {
     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+  }
+
+  @Override
+  public boolean onSupportNavigateUp() {
+    XLog.i("-------------------------- back up -------------------");
+    return true;
+  }
+
+  @Override
+  public void onBackPressed() {
+    /* force user to login */
   }
 }

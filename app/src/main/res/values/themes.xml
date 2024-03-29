@@ -121,10 +121,19 @@
     <item name="android:layout_width">wrap_content</item>
   </style>
 
+  <style name="Theme.Berry.Span.Flex">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_weight">1</item>
+  </style>
+
   <style name="Theme.Berry.Icon" parent="Theme.Berry.Span">
     <item name="android:layout_width">@dimen/icon_width</item>
     <item name="android:layout_height">@dimen/icon_height</item>
     <item name="android:gravity">center</item>
+  </style>
+
+  <style name="Theme.Berry.SelectableIcon" parent="Theme.Berry.Icon">
+    <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
   </style>
 
   <style name="Theme.Berry.Icon.Navigator">
@@ -136,6 +145,18 @@
   <style name="Theme.Berry.RecycleView.Entry">
     <item name="android:background">@drawable/bg_entry</item>
   </style>
+
+  <style name="Theme.Berry.RadioTextButton">
+    <item name="android:button">@null</item>
+    <item name="android:gravity">center</item>
+  </style>
+
+  <!-- ********************************* divider line ********************************** -->
+
+
+
+
+
 
 
   <!-- ********************************* divider line ********************************** -->
@@ -155,6 +176,10 @@
     <item name="layout_constraintTop_toTopOf">"parent"</item>
     <item name="layout_constraintBottom_toBottomOf">"parent"</item>
   </style>
+
+
+
+
 
   <!-- ********************************* divider line ********************************** -->
   <dimen name="corner_radius">5dp</dimen>

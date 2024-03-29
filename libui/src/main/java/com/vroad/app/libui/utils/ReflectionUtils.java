@@ -37,5 +37,4 @@ public class ReflectionUtils {
   public static <T> T getDeclaredField(Object obj, String fieldName) {
     return getDeclaredField(obj.getClass(), obj, fieldName);
   }
-
 }

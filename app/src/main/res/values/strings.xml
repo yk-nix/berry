@@ -53,5 +53,7 @@
   <string name="device_info_id">设备编号</string>
   <string name="device_info_ip">IP</string>
 
+  <string name="loading">加载中...</string>
+
 
 </resources>

@@ -3,8 +3,10 @@ package com.vroad.app.berry.adapter;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
@@ -85,4 +87,10 @@ public class BindingAdapters {
     bg.setTintList(colorStateList);
   }
 
+  @BindingAdapter("textStyle")
+  public static void setTextStyle(View view, int tf) {
+    if (view instanceof TextView) {
+      ((TextView)view).setTypeface(null, tf);
+    }
+  }
 }

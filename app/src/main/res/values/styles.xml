@@ -3,4 +3,38 @@
   <!-- *********************************** divider-line ********************************* -->
   <color name="shape_rectangle_background_color">@color/transparent</color>
   <dimen name="shape_rectangle_corner_radius">@dimen/dimen_8dp</dimen>
+
+
+  <dimen name="task_fragment_radio_button_height">30dp</dimen>
+  <dimen name="task_fragment_radio_button_width">40dp</dimen>
+  <style name="Theme.Berry.TasksFragment"/>
+  <style name="Theme.Berry.TasksFragment.Header">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:gravity">center</item>
+    <item name="android:orientation">horizontal</item>
+  </style>
+  <style name="Theme.Berry.TasksFragment.RadioGroup">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">@dimen/task_fragment_radio_button_height</item>
+    <item name="android:gravity">center</item>
+    <item name="android:orientation">horizontal</item>
+  </style>
+  <style name="Theme.Berry.TasksFragment.RadioTextButton" parent="Theme.Berry.RadioTextButton">
+    <item name="android:layout_height">@dimen/task_fragment_radio_button_height</item>
+    <item name="android:layout_width">@dimen/task_fragment_radio_button_width</item>
+  </style>
+  <style name="Theme.Berry.TasksFragment.RadioTextButton.Normal">
+    <item name="android:fontWeight">400</item>
+    <item name="android:background">@null</item>
+    <item name="android:textColor">@color/black</item>
+  </style>
+  <style name="Theme.Berry.TasksFragment.RadioTextButton.Selected">
+    <item name="android:fontWeight">700</item>
+    <item name="android:background">@drawable/bg_underline</item>
+    <item name="android:textColor">@color/green</item>
+  </style>
+
+
+
 </resources>
